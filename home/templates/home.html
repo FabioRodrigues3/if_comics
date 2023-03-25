@@ -1,0 +1,48 @@
+{% extends 'base.html' %} {% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Inclui o Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+  <!-- Inclui o CCS interno -->
+<link href="{% static 'home/static/css/home.css' %}" rel="stylesheet" />
+
+	<!-- Inclui o jQuery e o Bootstrap JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+{% block content %}
+<!-- Grade de webcomics -->
+<body>
+<div class="container">
+  <div class="row">
+
+    <div class="col-sm-4">
+        <div class="img-container">
+          <button onclick="location.href = '/home/webcomic'">
+          <img src="https://legendofthegoldenwind.files.wordpress.com/2019/01/yellowcover.jpg" class="img-responsive">
+        </div>
+      </button>
+    </div>
+
+    <div class="col-sm-4">
+      <button onclick="alert('Só tem Naruto disponivel Suzei')" class="btn btn-link p-0">
+        <div class="img-container">
+          <img src="https://legendofthegoldenwind.files.wordpress.com/2019/01/yellowcover9.jpg" class="img-responsive">
+        </div>
+      </button>
+    </div>
+
+    <div class="col-sm-4">
+      <button onclick="alert('Só tem Naruto disponivel Suzei')" class="btn btn-link p-0">
+        <div class="img-container">
+          <img src="https://legendofthegoldenwind.files.wordpress.com/2019/01/yellowcover2.jpg?w=736" class="img-responsive">
+        </div>
+      </button>
+    </div>
+</body>
+{% endblock %}
+</html>

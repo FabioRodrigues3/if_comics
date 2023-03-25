@@ -1,0 +1,24 @@
+#content {
+    background-image: url("../img/homeBackground.jpg");
+    background-repeat:no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.img-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%;
+  /* Define a proporção da imagem como 1:1 */
+}
+
+.img-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 100%;
+  max-height: 100%;
+  /* Faz com que a imagem preencha completamente o espaço disponível na div */
+}
