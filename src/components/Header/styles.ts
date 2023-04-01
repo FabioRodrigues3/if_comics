@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 export const Container = styled.header`
+	position: fixed;
+	width: 100%;
+	z-index: 1200000;
 	nav {
 		display: flex;
 		flex-direction: row;
@@ -10,6 +13,17 @@ export const Container = styled.header`
 		padding: 15px 50px;
 		background-color: white;
 		box-shadow: 0px 0px 5px black;
+
+		div {
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+
+			input {
+				padding: 3px;
+				outline: none;
+			}
+		}
 	}
 `;
 

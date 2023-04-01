@@ -17,6 +17,7 @@ export function Carousel({ works }: CarouselProps) {
 			swipeable
 			showStatus={false}
 			showIndicators={false}
+			showThumbs={false}
 		>
 			{works?.map((work) => (
 				<WorkCard

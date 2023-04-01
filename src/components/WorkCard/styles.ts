@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
-interface ImageURLProps {
+interface WorkCardProps {
 	image?: string;
+	hasLikeIndicator?: boolean;
 }
 
 export const WorkContainer = styled.div`
@@ -10,15 +11,15 @@ export const WorkContainer = styled.div`
 	box-shadow: 0px 0px 2px black;
 	background: white;
 	flex-direction: column;
-	padding: 0px 10px;
+	padding: 10px 10px;
 `;
 
-export const WorkCover = styled.div<ImageURLProps>`
+export const WorkCover = styled.div<WorkCardProps>`
 	height: 300px;
 	width: 200px;
-	background: url(${(props) => props.image}) no-repeat;
-	background-size: cover;
-	border-radius: 6px;
+	background: url(${(props) => props.image}) no-repeat center;
+	background-size: contain;
+	border-radius: 8px;
 `;
 
 export const WorkTitle = styled.p`
@@ -42,9 +43,16 @@ export const WorkInfo = styled.div`
 		font-size: 0.7rem;
 		align-items: center;
 		gap: 0.2rem;
+	}
+`;
 
-		svg {
-			color: green;
-		}
+export const LikeButton = styled.div<WorkCardProps>`
+	display: flex;
+	display: ${(props) => !props.hasLikeIndicator && 'none'};
+	align-items: center;
+	gap: 0.2rem;
+
+	svg {
+		color: green;
 	}
 `;

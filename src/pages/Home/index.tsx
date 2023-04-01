@@ -1,5 +1,5 @@
-import { WorkCardProps } from '../../components/WorkCard';
-import { Container, MostLikedWorks, PublishedWorks } from './styles';
+import { WorkCard, WorkCardProps } from '../../components/WorkCard';
+import { Container, FindWorks, Works } from './styles';
 import { Carousel } from '../../components/Carousel';
 import kaisen from '../../assets/kaisen.webp';
 import { useState } from 'react';
@@ -69,19 +69,107 @@ export function Home() {
 
 	const [work, setWork] = useState(works);
 
-	console.log(work);
-
 	return (
 		<Container>
 			<h2>Histórias publicadas</h2>
-			<PublishedWorks>
+			<Works>
 				<Carousel works={work} />
-			</PublishedWorks>
+			</Works>
 
 			<h2>Histórias mais curtidas</h2>
-			<MostLikedWorks>
+			<Works>
 				<Carousel works={work} />
-			</MostLikedWorks>
+			</Works>
+
+			<FindWorks>
+				<h2>Mais obras</h2>
+				<Works>
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						likes={12}
+						title="Shippuden Key"
+					/>
+
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+					<WorkCard
+						author="Masami Kurumada"
+						image={kaisen}
+						cardType="simple"
+						hasLikeIndicator={false}
+						likes={12}
+						title="Shippuden Key"
+					/>
+				</Works>
+			</FindWorks>
 		</Container>
 	);
 }

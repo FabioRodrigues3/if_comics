@@ -1,10 +1,13 @@
+import { AuthProvider } from './contexts/auth';
 import { AppRoutes } from './routes/routes';
 import { GlobalStyle } from './styles/global';
 function App() {
 	return (
 		<div>
 			<GlobalStyle />
-			<AppRoutes />
+			<AuthProvider>
+				<AppRoutes />
+			</AuthProvider>
 		</div>
 	);
 }

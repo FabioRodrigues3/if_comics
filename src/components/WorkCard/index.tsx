@@ -1,4 +1,10 @@
-import { WorkContainer, WorkCover, WorkInfo, WorkTitle } from './styles';
+import {
+	LikeButton,
+	WorkContainer,
+	WorkCover,
+	WorkInfo,
+	WorkTitle,
+} from './styles';
 import { ThumbsUp } from 'phosphor-react';
 import NoImage from '../../assets/sem-imagem.png';
 
@@ -7,8 +13,15 @@ export interface WorkCardProps {
 	image?: string;
 	author?: string;
 	likes?: string | number;
+	hasLikeIndicator?: boolean;
 }
-export function WorkCard({ author, likes, title, image }: WorkCardProps) {
+export function WorkCard({
+	author,
+	likes,
+	title,
+	image,
+	hasLikeIndicator = true,
+}: WorkCardProps) {
 	return (
 		<WorkContainer>
 			<WorkCover image={image?.length > 0 ? image : NoImage} />
@@ -16,8 +29,10 @@ export function WorkCard({ author, likes, title, image }: WorkCardProps) {
 				<WorkTitle>
 					{title}
 					<span>
-						<ThumbsUp size={15} />
-						{likes}
+						<LikeButton hasLikeIndicator={hasLikeIndicator}>
+							<ThumbsUp size={15} />
+							{likes}
+						</LikeButton>
 					</span>
 				</WorkTitle>
 

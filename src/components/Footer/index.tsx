@@ -1,3 +1,13 @@
+import { Container, CustomSeparator, FooterContent } from './styles';
+
 export function Footer() {
-	return <h2>FooterTesting</h2>;
+	return (
+		<Container>
+			<FooterContent>
+				<span>ifComics</span>
+				<CustomSeparator orientation="horizontal" decorative />
+				<span>Todos os direitos reservados</span>
+			</FooterContent>
+		</Container>
+	);
 }
