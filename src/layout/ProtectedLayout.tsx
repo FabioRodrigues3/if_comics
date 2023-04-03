@@ -1,12 +1,17 @@
-import React from 'react';
-import { useAuth } from '../hooks/useAuth';
+import React from 'react'
+import { useAuth } from '../hooks/useAuth'
+import { Outlet } from 'react-router-dom'
 
-export const ProtectedLayout = (children: JSX.Element) => {
-	const { email } = useAuth();
+interface ProtectedLayoutProps {
+  children: JSX.Element
+}
 
-	if (!email) {
-		return <h1>Você não tem permissão para acessar essa página.</h1>;
-	}
+export const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
+  const { email } = useAuth()
 
-	return children;
-};
+  if (email) {
+    return <h1>Você não tem permissão para acessar essa página.</h1>
+  }
+
+  return children ? children : <Outlet />
+}

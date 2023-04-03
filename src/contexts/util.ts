@@ -1,31 +1,31 @@
-import { api } from '../services/api';
-import { IUser } from './types/types';
+import { api } from '../services/api'
+import { IUser } from './types/types'
 
 export async function LoginRequest(email: string, password: string) {
-	try {
-		const request = await api.post('login', {
-			email,
-			password,
-		});
+  try {
+    const request = await api.post('/login', {
+      email,
+      password
+    })
 
-		return request.data;
-	} catch {
-		return null;
-	}
+    return request.data
+  } catch {
+    return null
+  }
 }
 
 export function setUserLocalStorage(user: IUser | null) {
-	localStorage.setItem('u', JSON.stringify(user));
+  localStorage.setItem('u', JSON.stringify(user))
 }
 
 export function getUserLocalStorage() {
-	const json = localStorage.getItem('u');
+  const json = localStorage.getItem('u')
 
-	if (!json) {
-		return null;
-	}
+  if (!json) {
+    return null
+  }
 
-	const user = JSON.parse(json);
+  const user = JSON.parse(json)
 
-	return user ?? null;
+  return user ?? null
 }
