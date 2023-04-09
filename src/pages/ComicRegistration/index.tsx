@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
 import {
   Container,
   FormBox,
+  Image,
   ImageBox,
   ImageRemove,
   InformationBox,
   Wrapper
 } from './styles'
-import naruto from '../../assets/naruto-vol-5.jpg'
 
 export function ComicRegistration() {
-  const { register } = useForm()
   const [file, setFile] = useState<Blob>()
 
   return (
@@ -19,7 +17,7 @@ export function ComicRegistration() {
       <Wrapper>
         <h2>Criação de história</h2>
         <FormBox>
-          <div>
+          <Image>
             <span>Capa da obra</span>
             <ImageBox imageUploaded={file}>
               {!file && (
@@ -34,14 +32,13 @@ export function ComicRegistration() {
               {file && (
                 <div>
                   <ImageRemove onClick={() => setFile(null)}>
-                    {' '}
                     <h3>Clique para remover a imagem.</h3>
                   </ImageRemove>
                   <img src={URL.createObjectURL(file)} alt="Imagem da obra" />
                 </div>
               )}
             </ImageBox>
-          </div>
+          </Image>
 
           <InformationBox>
             <div>

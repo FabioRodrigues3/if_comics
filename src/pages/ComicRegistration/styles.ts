@@ -10,15 +10,20 @@ export const Container = styled.div`
   align-items: center;
   width: 100%;
   padding: 1rem;
+
+  input {
+    border: none;
+  }
 `
 
 export const FormBox = styled.form`
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   gap: 3rem;
   background: #c5c5c5;
-  padding: 1rem 0;
+  padding: 2rem 0;
   width: 100%;
 
   span {
@@ -29,14 +34,14 @@ export const FormBox = styled.form`
 export const ImageBox = styled.div<ComicRegistrationProps>`
   display: flex;
   justify-content: center;
-
-  padding: ${(props) => (!props.imageUploaded ? '3rem 3rem' : '0')};
+  padding: ${(props) => (!props.imageUploaded ? '10rem 3rem' : '0')};
   border: gray ${(props) => (props.imageUploaded ? 'none' : '2px dotted')};
   border-radius: 6px;
   input {
     display: flex;
     flex-direction: column;
     height: 100%;
+    border-radius: 6px;
     width: 100%;
     justify-content: space-between;
   }
@@ -52,30 +57,36 @@ export const InformationBox = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  width: 100%;
   gap: 1rem;
+  flex: 1;
   margin-top: 80px;
+  padding: 1rem 5rem 0 0;
+
+  input {
+    max-width: 450px;
+    padding: 1rem;
+    border-radius: 6px;
+    border: none;
+    outline: none;
+  }
 
   div {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 0.2rem;
     width: 100%;
-
-    input {
-      width: 100%;
-      max-width: 450px;
-      padding: 1rem;
-    }
   }
 
   div:nth-child(2) {
     textarea {
       height: 300px;
-      width: 500px;
+      width: 100%;
       padding: 1rem;
       resize: none;
+      border-radius: 6px;
+      border: none;
+      outline: none;
     }
   }
 `
@@ -94,12 +105,17 @@ export const Wrapper = styled.div`
   }
 `
 export const ImageRemove = styled.div`
-  background: none;
-  z-index: 20000;
-  position: absolute;
-  height: 350px;
-  border-radius: 5px;
   &:hover {
-    display: block;
+    background: rgba(0, 0, 0, 20%);
+    z-index: 20000;
+    position: absolute;
+    height: 350px;
+    border-radius: 5px;
   }
+`
+export const Image = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 2rem;
+  gap: 0.1rem;
 `
