@@ -23,7 +23,7 @@ export const FormBox = styled.form`
   align-items: center;
   gap: 3rem;
   background: #c5c5c5;
-  padding: 2rem 0;
+  padding: 3rem 0;
   width: 100%;
 
   span {
@@ -47,9 +47,14 @@ export const ImageBox = styled.div<ComicRegistrationProps>`
   }
 
   img {
-    height: 350px;
+    min-height: 350px;
+    max-height: 500px;
     border-radius: 5px;
+    min-width: 360px;
+    max-width: 360px;
     width: fit-content;
+    object-fit: cover;
+    object-position: 50% 50%;
   }
 `
 
@@ -104,18 +109,44 @@ export const Wrapper = styled.div`
     border-top-right-radius: 8px;
   }
 `
-export const ImageRemove = styled.div`
-  &:hover {
-    background: rgba(0, 0, 0, 20%);
-    z-index: 20000;
-    position: absolute;
-    height: 350px;
-    border-radius: 5px;
-  }
-`
 export const Image = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 2rem;
   gap: 0.1rem;
+`
+
+export const Overlay = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  border-radius: 6px;
+  background-color: teal;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  div {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+`
+export const ImageContainer = styled.div`
+  position: relative;
+  border-radius: 6px;
+  width: 100%;
 `

@@ -1,11 +1,13 @@
+import { Prohibit } from 'phosphor-react'
 import React, { useState } from 'react'
 import {
   Container,
   FormBox,
   Image,
   ImageBox,
-  ImageRemove,
+  ImageContainer,
   InformationBox,
+  Overlay,
   Wrapper,
 } from './styles'
 
@@ -30,12 +32,15 @@ export function ComicRegistration() {
                 />
               )}
               {file && (
-                <div>
-                  <ImageRemove onClick={() => setFile(null)}>
-                    <h3>Clique para remover a imagem.</h3>
-                  </ImageRemove>
+                <ImageContainer onClick={() => setFile(null)}>
+                  <Overlay>
+                    <div>
+                      <Prohibit size={30} />
+                      <h3>Clique para remover a imagem.</h3>
+                    </div>
+                  </Overlay>
                   <img src={URL.createObjectURL(file)} alt="Imagem da obra" />
-                </div>
+                </ImageContainer>
               )}
             </ImageBox>
           </Image>
