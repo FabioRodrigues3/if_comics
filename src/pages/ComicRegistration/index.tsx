@@ -6,7 +6,7 @@ import {
   ImageBox,
   ImageRemove,
   InformationBox,
-  Wrapper
+  Wrapper,
 } from './styles'
 
 export function ComicRegistration() {

@@ -1,5 +1,5 @@
 import { Container, StyledLink } from './styles'
-import { User, MagnifyingGlass } from 'phosphor-react'
+import { User, MagnifyingGlass, PlusCircle } from 'phosphor-react'
 
 export function Header() {
   return (
@@ -8,9 +8,9 @@ export function Header() {
         <nav>
           <StyledLink to="/">ifComics</StyledLink>
 
-          {/* <StyledLink to="/">
-					<PlusCircle size={23} weight="fill" />
-				</StyledLink> */}
+          <StyledLink to="/create-work/new-series">
+            <PlusCircle size={23} weight="fill" />
+          </StyledLink>
 
           <div>
             <MagnifyingGlass size={23} />
