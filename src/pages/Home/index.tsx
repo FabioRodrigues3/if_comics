@@ -1,13 +1,13 @@
-import { WorkCard, WorkCardProps } from '../../components/WorkCard'
 import { Container, FindWorks, Works } from './styles'
 import { Carousel } from '../../components/Carousel'
 import { CustomSeparator } from '../../components/Footer/styles'
 import { useSeries } from '../../hooks/useWorks'
+import { WorkCard } from '../../components/WorkCard'
 
 export function Home() {
   const { series } = useSeries()
 
-  const sortByLikes = series.sort((a, b) => a.likes - b.likes)
+  const sortByLikes = series.sort((a, b) => b.likes - a.likes)
 
   return (
     <Container>
@@ -28,7 +28,11 @@ export function Home() {
       <FindWorks>
         <CustomSeparator />
         <h2>Mais obras</h2>
-        <Works></Works>
+        <Works>
+          {series.map((work) => (
+            <WorkCard {...work} />
+          ))}
+        </Works>
       </FindWorks>
     </Container>
   )

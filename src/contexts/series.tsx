@@ -4,7 +4,7 @@ interface SeriesProps {
   title: string
   description: string
   author: string
-  likes: string | number
+  likes: number
   createdAt: string
   image: string
 }
@@ -24,6 +24,15 @@ export const SeriesProvider = ({ children }: { children: React.ReactNode }) => {
         createdAt: '12/11/19',
         description: 'um cu',
         likes: 12,
+        title: 'O grande disgraça',
+        image: '',
+      },
+
+      {
+        author: 'sizei',
+        createdAt: '12/11/19',
+        description: 'um cu',
+        likes: 13,
         title: 'O grande disgraça',
         image: '',
       },
