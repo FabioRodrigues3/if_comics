@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const Container = styled.form`
   display: flex;
 
   width: 100%;
@@ -22,7 +22,7 @@ export const Title = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  padding-top: 80px;
+  padding: 80px 0;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -32,7 +32,6 @@ export const MainDescription = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: ;
   gap: 2rem;
 `;
 
@@ -126,7 +125,7 @@ export const GenreSelector = styled.div`
   flex-direction: column;
   padding: 2rem 0;
   flex-wrap: wrap;
-  margin-right: 10rem;
+  margin-right: 15rem;
   gap: 16px;
 
   input {

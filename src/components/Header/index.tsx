@@ -18,7 +18,7 @@ export function Header() {
         <nav>
           <StyledLink to="/">ifComics</StyledLink>
           <div>
-            <input type="text" placeholder="Pesquisar" />
+            <input type="search" placeholder="Pesquisar" />
             <StyledLink to="/login">
               <User size={23} weight="fill" />
               Login

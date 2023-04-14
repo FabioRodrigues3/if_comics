@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Description,
@@ -12,18 +12,33 @@ import {
   Genres,
   GenreTitle,
 } from './styles'
-import { Button } from '../../components/Button'
 import { Upload } from 'phosphor-react'
 import genre from './genres.json'
+import { CreateComic } from '../../services/createComic'
+import { v4 as uuid } from 'uuid'
 
 export function ComicRegistration() {
-  const [file, setFile] = useState<Blob>()
+  const [file, setFile] = useState<string>()
+
+  async function comicRegistration() {
+    await CreateComic({
+      description: 'O bichinho é brabo',
+      id: uuid(),
+      image: file,
+      title: 'O assalto de fulaninho',
+      likes: 0,
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   return (
     <Container>
       <Title>
         <h2>Criação de história</h2>
-        <Button isNavigatable={false} title="Criar história"></Button>
+        <button onClick={comicRegistration} type="button">
+          Criar história
+        </button>
       </Title>
 
       <Wrapper>

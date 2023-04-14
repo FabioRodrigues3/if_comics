@@ -1,5 +1,8 @@
 import axios from 'axios';
 
 export const api = axios.create({
-	baseURL: 'http://reqres.in/api/',
+  baseURL: 'http://reqres.in/api/',
+  headers: {
+    'Access-Control-Allow-Origin': '*',
+  },
 });

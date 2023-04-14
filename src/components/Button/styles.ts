@@ -13,6 +13,7 @@ export const Button = styled.a`
   font-weight: 500;
   transition: 1s ease;
   border: none;
+  cursor: pointer;
 
   &:hover {
     background-color: #5b5757;

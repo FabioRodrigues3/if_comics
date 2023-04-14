@@ -3,10 +3,11 @@ import {
   WorkContainer,
   WorkCover,
   WorkInfo,
-  WorkTitle
+  WorkTitle,
 } from './styles'
 import { ThumbsUp } from 'phosphor-react'
 import NoImage from '../../assets/sem-imagem.png'
+import { Link } from 'react-router-dom'
 
 export interface WorkCardProps {
   title?: string
@@ -22,10 +23,10 @@ export function WorkCard({
   title,
   image,
   hasLikeIndicator = true,
-  link
+  link,
 }: WorkCardProps) {
   return (
-    <a href="#">
+    <Link to="/login">
       <WorkContainer>
         <WorkCover image={image?.length > 0 ? image : NoImage} />
         <WorkInfo>
@@ -42,6 +43,6 @@ export function WorkCard({
           <span>{author}</span>
         </WorkInfo>
       </WorkContainer>
-    </a>
+    </Link>
   )
 }

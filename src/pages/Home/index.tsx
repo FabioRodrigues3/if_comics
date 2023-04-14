@@ -30,7 +30,7 @@ export function Home() {
         <h2>Mais obras</h2>
         <Works>
           {series.map((work) => (
-            <WorkCard {...work} />
+            <WorkCard {...work} hasLikeIndicator={false} />
           ))}
         </Works>
       </FindWorks>

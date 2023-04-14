@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
+import { GetComics } from '../services/getComics'
 
 interface SeriesProps {
   title: string
@@ -18,25 +19,7 @@ export const SeriesProvider = ({ children }: { children: React.ReactNode }) => {
   const [seriesList, setSeriesList] = useState<SeriesProps[]>([])
 
   async function settingSeriesList() {
-    setSeriesList([
-      {
-        author: 'sizei',
-        createdAt: '12/11/19',
-        description: 'um cu',
-        likes: 12,
-        title: 'O grande disgraça',
-        image: '',
-      },
-
-      {
-        author: 'sizei',
-        createdAt: '12/11/19',
-        description: 'um cu',
-        likes: 13,
-        title: 'O grande disgraça',
-        image: '',
-      },
-    ])
+    await GetComics().then((response) => setSeriesList(response))
   }
 
   useEffect(() => {
