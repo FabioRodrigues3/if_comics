@@ -10,6 +10,7 @@ import {
 } from './styles'
 import { BookOpen, Files, Gear, Question, User } from 'phosphor-react'
 import { Separator } from '@radix-ui/react-separator'
+import { SearchBar } from '../SearchBar'
 
 export function Header() {
   return (
@@ -18,7 +19,7 @@ export function Header() {
         <nav>
           <StyledLink to="/">ifComics</StyledLink>
           <div>
-            <input type="search" placeholder="Pesquisar" />
+            <SearchBar />
             <StyledLink to="/login">
               <User size={23} weight="fill" />
               Login
@@ -33,7 +34,7 @@ export function Header() {
 
               <DropdownMenu.Portal>
                 <Content sideOffset={8}>
-                  <Item className="DropdownMenuItem">
+                  <Item>
                     <AvatarPic>
                       <AvatarImage src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80" />
                     </AvatarPic>
@@ -60,7 +61,7 @@ export function Header() {
 
                   <Separator />
 
-                  <Item disabled>
+                  <Item>
                     <Gear size={28} />
                     <span>Configurações</span>
                   </Item>
@@ -73,11 +74,7 @@ export function Header() {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
 
-            <Button
-              title="Publicar"
-              isNavigatable
-              path="/create-work/new-series"
-            />
+            <Button title="Publicar" isNavigatable path="/comic/new-series" />
           </div>
         </nav>
       </Container>

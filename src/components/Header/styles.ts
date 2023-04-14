@@ -19,14 +19,6 @@ export const Container = styled.header`
       display: flex;
       gap: 1rem;
       align-items: center;
-
-      input {
-        padding: 8px;
-        border-radius: 30px;
-        padding-left: 15px;
-        outline: none;
-        font-size: 15px;
-      }
     }
   }
 `;
@@ -86,6 +78,7 @@ export const Item = styled(Dropdown.Item)`
   align-items: center;
   padding: 0.5rem;
   gap: 1rem;
+  cursor: pointer;
 
   div {
     display: flex;

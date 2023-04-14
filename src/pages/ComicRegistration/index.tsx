@@ -16,12 +16,13 @@ import { Upload } from 'phosphor-react'
 import genre from './genres.json'
 import { CreateComic } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
+import { TagPicker } from 'rsuite'
 
 export function ComicRegistration() {
   const [file, setFile] = useState<string>()
 
   async function comicRegistration() {
-    await CreateComic({
+    const test = await CreateComic({
       description: 'O bichinho é brabo',
       id: uuid(),
       image: file,
@@ -30,7 +31,18 @@ export function ComicRegistration() {
     }).catch((err) => {
       console.log(err)
     })
+
+    console.log(test)
   }
+
+  const genres = [
+    'Romance',
+    'Drama',
+    'Ação',
+    'Aventura',
+    'Comédia',
+    'Horror',
+  ].map((item) => ({ label: item, value: item }))
 
   return (
     <Container>
@@ -72,12 +84,7 @@ export function ComicRegistration() {
             <span>Selecione até 3 gêneros</span>
           </GenreTitle>
           <Genres>
-            {Object.values(genre.genres).map((item) => (
-              <label>
-                {item}
-                <input type="checkbox" />
-              </label>
-            ))}
+            <TagPicker data={genres} />
           </Genres>
         </GenreSelector>
       </Wrapper>

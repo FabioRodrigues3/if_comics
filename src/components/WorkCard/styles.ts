@@ -1,8 +1,8 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 interface WorkCardProps {
-  image?: string
-  hasLikeIndicator?: boolean
+  image?: string;
+  hasLikeIndicator?: boolean;
 }
 
 export const WorkContainer = styled.div`
@@ -13,15 +13,15 @@ export const WorkContainer = styled.div`
   flex-direction: column;
   padding: 10px 10px;
   cursor: pointer;
-`
+`;
 
 export const WorkCover = styled.div<WorkCardProps>`
   height: 300px;
   width: 200px;
   background: url(${(props) => props.image}) no-repeat center;
-  background-size: contain;
+  background-size: cover;
   border-radius: 8px;
-`
+`;
 
 export const WorkTitle = styled.p`
   background-color: white;
@@ -32,7 +32,7 @@ export const WorkTitle = styled.p`
   margin: 0;
   border-radius: 3px;
   width: 100%;
-`
+`;
 
 export const WorkInfo = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ export const WorkInfo = styled.div`
     align-items: center;
     gap: 0.2rem;
   }
-`
+`;
 
 export const LikeButton = styled.div<WorkCardProps>`
   display: flex;
@@ -56,4 +56,4 @@ export const LikeButton = styled.div<WorkCardProps>`
   svg {
     color: green;
   }
-`
+`;

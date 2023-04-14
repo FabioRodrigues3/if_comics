@@ -15,14 +15,11 @@ export async function CreateComic({
   title,
   likes,
 }: CreateComicProps) {
-  await comicApi.post<CreateComicProps>(
-    '/comics/create',
-    JSON.stringify({
-      title,
-      image,
-      likes,
-      id,
-      description,
-    }),
-  )
+  await comicApi.post<CreateComicProps>('/comics/create', {
+    title,
+    image,
+    likes,
+    id,
+    description,
+  })
 }

@@ -16,17 +16,19 @@ export interface WorkCardProps {
   likes?: string | number
   hasLikeIndicator?: boolean
   link?: string
+  id?: string
 }
 export function WorkCard({
   author,
   likes,
   title,
+  id,
   image,
   hasLikeIndicator = true,
   link,
 }: WorkCardProps) {
   return (
-    <Link to="/login">
+    <Link to={`/comic/${id}`}>
       <WorkContainer>
         <WorkCover image={image?.length > 0 ? image : NoImage} />
         <WorkInfo>
