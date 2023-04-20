@@ -14,7 +14,7 @@ export function Login() {
   async function AuthenticateLogin(values: {
     email: string
     password: string
-    e?: Event
+    e?: EventTarget
   }) {
     e.preventDefault()
     try {
@@ -34,7 +34,7 @@ export function Login() {
       </Logo>
       <LoginBox
         handleSubmit={handleSubmit(() =>
-          AuthenticateLogin({ email, password })
+          AuthenticateLogin({ email, password }),
         )}
       >
         <div>

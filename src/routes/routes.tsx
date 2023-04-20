@@ -5,6 +5,7 @@ import { Login } from '../components/Login'
 import { ProtectedLayout } from '../layout/ProtectedLayout'
 import { ComicRegistration } from '../pages/ComicRegistration'
 import { ComicChapters } from '../pages/ComicChapters'
+import { Reader } from '../pages/Reader'
 
 export function AppRoutes() {
   return (
@@ -13,10 +14,12 @@ export function AppRoutes() {
         <Route path="/" element={<DefaultLayout />}>
           <Route path="/" element={<Home />} />
 
-          <Route path="/comic" element={<ProtectedLayout />}>
-            <Route path="/comic/new-series" element={<ComicRegistration />} />
-
+          <Route path="/admin" element={<ProtectedLayout />}>
+            <Route path="/admin/new-series" element={<ComicRegistration />} />
+          </Route>
+          <Route path="/">
             <Route path="/comic/:id" element={<ComicChapters />} />
+            <Route path="/reader/:id" element={<Reader />} />
           </Route>
         </Route>
 

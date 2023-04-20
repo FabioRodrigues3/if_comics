@@ -5,8 +5,9 @@ export interface getComicsProps {
   title?: string
   author?: string
   description?: string
-  likes: number
-  image: string
+  likes?: number
+  image?: string
+  tags?: string[]
 }
 
 interface getComicByIdProps {

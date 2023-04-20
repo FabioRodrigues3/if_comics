@@ -21,7 +21,6 @@ export function SearchBar() {
   const inputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const lowerCased = e.target.value.toLowerCase()
     setInputText(lowerCased)
-    console.log(inputText)
   }
   useEffect(() => {
     getSearchData()

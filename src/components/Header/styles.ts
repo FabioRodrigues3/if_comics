@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import * as Avatar from '@radix-ui/react-avatar';
-import * as Dropdown from '@radix-ui/react-dropdown-menu';
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
+import * as Avatar from '@radix-ui/react-avatar'
+import * as Dropdown from '@radix-ui/react-dropdown-menu'
 
 export const Container = styled.header`
   width: 100%;
@@ -12,7 +12,7 @@ export const Container = styled.header`
     justify-content: space-between;
     padding: 15px 50px;
     background-color: white;
-    box-shadow: 0px 0px 20px black;
+    box-shadow: 0px 0px 3px black;
     margin-bottom: 1px;
 
     div {
@@ -21,7 +21,7 @@ export const Container = styled.header`
       align-items: center;
     }
   }
-`;
+`
 
 export const StyledLink = styled(Link)`
   color: black;
@@ -45,20 +45,20 @@ export const StyledLink = styled(Link)`
       }
     }
   }
-`;
+`
 
 export const AvatarPic = styled(Avatar.Root)`
   display: flex;
   align-items: center;
   cursor: pointer;
-`;
+`
 
 export const AvatarImage = styled(Avatar.Image)`
   height: 30px;
   width: 30px;
   border-radius: 100%;
   object-fit: cover;
-`;
+`
 
 export const Content = styled(Dropdown.Content)`
   min-width: 200px;
@@ -71,7 +71,7 @@ export const Content = styled(Dropdown.Content)`
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
-`;
+`
 
 export const Item = styled(Dropdown.Item)`
   display: flex;
@@ -85,11 +85,11 @@ export const Item = styled(Dropdown.Item)`
     flex-direction: column;
     font-size: 12px;
   }
-`;
+`
 
 export const Separator = styled(Dropdown.Separator)`
   height: 1px;
   width: 100%;
   background-color: #707070;
   margin: 5px;
-`;
+`

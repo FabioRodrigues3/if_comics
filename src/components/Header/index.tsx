@@ -74,7 +74,7 @@ export function Header() {
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
 
-            <Button title="Publicar" isNavigatable path="/comic/new-series" />
+            <Button title="Publicar" isNavigatable path="/admin/new-series" />
           </div>
         </nav>
       </Container>

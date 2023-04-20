@@ -31,18 +31,7 @@ export function ComicRegistration() {
     }).catch((err) => {
       console.log(err)
     })
-
-    console.log(test)
   }
-
-  const genres = [
-    'Romance',
-    'Drama',
-    'Ação',
-    'Aventura',
-    'Comédia',
-    'Horror',
-  ].map((item) => ({ label: item, value: item }))
 
   return (
     <Container>
@@ -84,7 +73,9 @@ export function ComicRegistration() {
             <span>Selecione até 3 gêneros</span>
           </GenreTitle>
           <Genres>
-            <TagPicker data={genres} />
+            {genre.genres.map((item) => (
+              <span>{item}</span>
+            ))}
           </Genres>
         </GenreSelector>
       </Wrapper>
