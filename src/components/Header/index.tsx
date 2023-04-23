@@ -7,6 +7,7 @@ import {
   Content,
   Item,
   StyledLink,
+  Title,
 } from './styles'
 import { BookOpen, Files, Gear, Question, User } from 'phosphor-react'
 import { Separator } from '@radix-ui/react-separator'
@@ -17,7 +18,7 @@ export function Header() {
     <>
       <Container>
         <nav>
-          <StyledLink to="/">ifComics</StyledLink>
+          <Title to="/">ifComics</Title>
           <div>
             <SearchBar />
             <StyledLink to="/login">

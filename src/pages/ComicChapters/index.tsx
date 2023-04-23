@@ -1,6 +1,5 @@
-import { getComicById, getComicsProps } from '../../services/getComicById'
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React from 'react'
+import { Link } from 'react-router-dom'
 import {
   Chapter,
   Chapters,
@@ -60,13 +59,12 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
           <h3>Capítulos</h3>
           <Chapters>
             <Chapter>
-              <Link to="/">
+              <Link to={`/reader/${serie?.id}/`}>
                 <sup>Capítulo 1</sup>
                 <h4>1. Sukuna</h4>
                 <span>15/04/99 </span>
               </Link>
             </Chapter>
-
             <span>Não há capítulos disponíveis. </span>
           </Chapters>
         </WorkChapters>

@@ -1,5 +1,5 @@
-import { Item, Content } from '@radix-ui/react-dropdown-menu';
-import styled from 'styled-components';
+import { Item, Content } from '@radix-ui/react-dropdown-menu'
+import styled from 'styled-components'
 
 export const Search = styled.input`
   padding: 8px;
@@ -7,7 +7,7 @@ export const Search = styled.input`
   padding-left: 15px;
   outline: none;
   font-size: 15px;
-`;
+`
 
 export const SearchItem = styled(Item)`
   display: flex;
@@ -26,16 +26,16 @@ export const SearchItem = styled(Item)`
     display: flex;
     flex-direction: column;
   }
-`;
+`
 
-export const Famous = styled(Item)``;
+export const Famous = styled(Item)``
 
 export const SearchResults = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
-`;
+`
 
 export const DropdownContent = styled(Content)`
   min-width: 300px;
@@ -48,4 +48,4 @@ export const DropdownContent = styled(Content)`
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
-`;
+`

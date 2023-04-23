@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 
 export const Button = styled.a`
   background-color: #707070;
   border-radius: 15px;
   width: 100%;
   text-align: center;
-  max-width: 120px;
+  max-width: 200px;
   padding: 5px 10px;
   color: white;
   font-size: 1rem;
@@ -18,7 +18,7 @@ export const Button = styled.a`
   &:hover {
     background-color: #5b5757;
   }
-`;
+`
 
 export const NavigatableButton = styled(Link)`
   background-color: #707070;
@@ -35,4 +35,4 @@ export const NavigatableButton = styled(Link)`
   &:hover {
     background-color: #5b5757;
   }
-`;
+`

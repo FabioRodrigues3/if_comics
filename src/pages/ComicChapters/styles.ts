@@ -7,6 +7,10 @@ export const Container = styled.div`
   gap: 10rem;
   padding: 2rem 0;
   margin: 0 auto;
+  @media (max-width: ${(props) => props.theme.l}) {
+    flex-direction: column;
+    gap: 1rem;
+  }
 `
 
 export const InfoCardArea = styled.div`
@@ -32,6 +36,12 @@ export const WorkImage = styled.img`
 export const WorkHeader = styled.header`
   display: flex;
   gap: 2rem;
+
+  @media (max-width: ${(props) => props.theme.l}) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 `
 export const WorkTitle = styled.div`
   display: flex;
@@ -39,15 +49,16 @@ export const WorkTitle = styled.div`
   align-self: center;
   margin-top: 1rem;
   color: #707070;
+  gap: 0.5rem;
 
   h3 {
     font-size: 2.1875rem;
-    font-weight: lighter;
+    font-weight: 400;
     color: #707070;
   }
 
   span {
-    font-size: 1.6rem;
+    font-size: 25px;
   }
 `
 export const WorkChapters = styled.div`
@@ -57,7 +68,7 @@ export const WorkChapters = styled.div`
   h3 {
     font-size: 2.8125rem;
     border-bottom: 1px solid #707070;
-    font-weight: 500;
+    font-weight: 400;
     color: #707070;
     padding: 1rem 0;
   }
@@ -73,9 +84,14 @@ export const Chapter = styled.div`
   border-bottom: 1px solid #707070;
   padding-bottom: 1rem;
 
+  span {
+    font-weight: 400;
+    font-size: 0.9375rem;
+  }
+
   h4 {
     font-size: 2.1875rem;
-    font-weight: 500;
+    font-weight: 400;
     color: #707070;
   }
 

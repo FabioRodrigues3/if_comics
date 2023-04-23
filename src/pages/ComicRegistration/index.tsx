@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import {
   Container,
   Description,
@@ -16,7 +16,6 @@ import { Upload } from 'phosphor-react'
 import genre from './genres.json'
 import { CreateComic } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
-import { TagPicker } from 'rsuite'
 
 export function ComicRegistration() {
   const [file, setFile] = useState<string>()

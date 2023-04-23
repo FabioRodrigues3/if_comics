@@ -6,6 +6,7 @@ import { ProtectedLayout } from '../layout/ProtectedLayout'
 import { ComicRegistration } from '../pages/ComicRegistration'
 import { ComicChapters } from '../pages/ComicChapters'
 import { Reader } from '../pages/Reader'
+import { ChapterRegistration } from '../pages/ChapterRegistration'
 
 export function AppRoutes() {
   return (
@@ -16,6 +17,10 @@ export function AppRoutes() {
 
           <Route path="/admin" element={<ProtectedLayout />}>
             <Route path="/admin/new-series" element={<ComicRegistration />} />
+            <Route
+              path="/admin/:id/new-chapter"
+              element={<ChapterRegistration />}
+            />
           </Route>
           <Route path="/">
             <Route path="/comic/:id" element={<ComicChapters />} />

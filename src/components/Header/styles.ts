@@ -15,10 +15,22 @@ export const Container = styled.header`
     box-shadow: 0px 0px 3px black;
     margin-bottom: 1px;
 
-    div {
+    @media (max-width: ${(props) => props.theme.l}) {
+      > a {
+        display: none;
+      }
+    }
+
+    > div {
       display: flex;
       gap: 1rem;
       align-items: center;
+    }
+
+    @media (max-width: ${(props) => props.theme.l}) {
+      flex-direction: column;
+      gap: 1rem;
+      padding: 1rem 0;
     }
   }
 `
@@ -44,6 +56,12 @@ export const StyledLink = styled(Link)`
         animation-duration: 4s;
       }
     }
+  }
+`
+
+export const Title = styled(StyledLink)`
+  @media (max-width: ${(props) => props.theme.l}) {
+    display: block;
   }
 `
 

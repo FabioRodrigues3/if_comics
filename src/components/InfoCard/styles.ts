@@ -33,6 +33,10 @@ export const Container = styled.div`
     text-align: start;
     padding: 1rem;
     color: #707070;
+
+    @media (max-width: ${(props) => props.theme.l}) {
+      max-width: 500px;
+    }
   }
 `
 export const CardTitle = styled.div`
