@@ -16,29 +16,39 @@ import { Upload } from 'phosphor-react'
 import genre from './genres.json'
 import { CreateComic } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
+import { useForm } from 'react-hook-form'
+import { getComicsProps } from '../../services/getComicById'
+import { Button } from '../../components/Button'
 
 export function ComicRegistration() {
   const [file, setFile] = useState<string>()
 
-  async function comicRegistration() {
-    const test = await CreateComic({
-      description: 'O bichinho é brabo',
+  const { register, handleSubmit, reset } = useForm({
+    defaultValues: {
+      imageFile: file,
+      title: '',
+      description: '',
+    },
+  })
+
+  async function comicRegistration(data: getComicsProps) {
+    await CreateComic({
+      description: data.description,
       id: uuid(),
-      image: file,
-      title: 'O assalto de fulaninho',
-      likes: 0,
+      author: 'Default Author',
+      title: data.title,
     }).catch((err) => {
       console.log(err)
     })
+
+    reset()
   }
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(comicRegistration)}>
       <Title>
         <h2>Criação de história</h2>
-        <button onClick={comicRegistration} type="button">
-          Criar história
-        </button>
+        <Button title="Criar história" isNavigatable={false}></Button>
       </Title>
 
       <Wrapper>
@@ -48,7 +58,7 @@ export function ComicRegistration() {
 
             <label>
               Upload
-              <input type="file"></input>
+              <input type="file" {...register('imageFile')} />
             </label>
             <span>(500 x 500)</span>
           </ImageUpload>
@@ -56,12 +66,12 @@ export function ComicRegistration() {
           <TitleAndDescription>
             <WorkTitle>
               <span>Título</span>
-              <input type="text" />
+              <input required type="text" {...register('title')} />
             </WorkTitle>
 
             <Description>
               <span>Descrição</span>
-              <textarea></textarea>
+              <textarea required {...register('description')}></textarea>
             </Description>
           </TitleAndDescription>
         </MainDescription>

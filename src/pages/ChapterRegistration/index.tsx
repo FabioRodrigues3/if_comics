@@ -11,10 +11,13 @@ import {
 } from './styles'
 import React, { useState } from 'react'
 import { Button } from '../../components/Button'
+import { useIdParam } from '../../hooks/useIdParam'
 
 export function ChapterRegistration() {
   const [file, setFile] = useState<string>()
-  console.log(file)
+  const { serie } = useIdParam()
+
+  console.log(serie?.id)
 
   if (file) console.log(URL.createObjectURL(file))
 
@@ -59,7 +62,7 @@ export function ChapterRegistration() {
             </WorkTitle>
 
             <WorkTitle>
-              <span>Númer do capítulo</span>
+              <span>Número do capítulo</span>
               <input type="number" min={0} max={9999} />
             </WorkTitle>
           </TitleAndDescription>

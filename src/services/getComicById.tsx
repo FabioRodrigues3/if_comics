@@ -10,11 +10,16 @@ export interface getComicsProps {
   tags?: string[]
 }
 
+export interface ResponseProps {
+  comicById: getComicsProps
+}
+
 interface getComicByIdProps {
   id: string
 }
 
 export async function getComicById({ id }: getComicByIdProps) {
-  const { data } = await comicApi.get<getComicsProps>(`comics/${id}`)
-  return data
+  const { data } = await comicApi.get<ResponseProps>(`/comics/${id}`)
+  console.log(data)
+  return data.comicById
 }

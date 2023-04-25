@@ -6,6 +6,7 @@ interface CreateComicProps {
   description?: string
   image?: string
   likes?: number
+  author?: string
 }
 
 export async function CreateComic({
@@ -13,10 +14,12 @@ export async function CreateComic({
   id,
   image,
   title,
+  author,
   likes,
 }: CreateComicProps) {
-  await comicApi.post<CreateComicProps>('/comics/create', {
+  await comicApi.post<CreateComicProps>('/comics', {
     title,
+    author,
     image,
     likes,
     id,

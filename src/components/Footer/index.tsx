@@ -8,7 +8,13 @@ export function Footer() {
         <FooterContent>
           <span>ifComics</span>
           <div>
-            <InstagramLogo size={40} />
+            <a
+              href="https://github.com/FabioRodrigues3"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <InstagramLogo size={40} />
+            </a>
             <GithubLogo size={40} />
             <TwitterLogo size={40} weight="fill" />
           </div>

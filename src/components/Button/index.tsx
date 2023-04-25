@@ -20,7 +20,7 @@ export function Button({
           <span>{title}</span>
         </NavigatableButton>
       ) : (
-        <DefaultButton onClick={handleClick}>
+        <DefaultButton type="submit" onClick={handleClick}>
           <span>{title}</span>
         </DefaultButton>
       )}

@@ -9,7 +9,11 @@ interface getComicsProps {
   image: string
 }
 
+interface ResponseProps {
+  comics: getComicsProps
+}
+
 export async function GetComics() {
-  const { data } = await comicApi.get<getComicsProps[]>('/comics')
-  return data
+  const { data } = await comicApi.get<ResponseProps>('/comics')
+  return data.comics
 }
