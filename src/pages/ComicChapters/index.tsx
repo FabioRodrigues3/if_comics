@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import {
   Chapter,
   Chapters,
@@ -14,6 +14,8 @@ import {
 import { InfoCard } from '../../components/InfoCard'
 import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
+import { getChapterById } from '../../services/getChapters'
+import { useChapters } from '../../hooks/useChapters'
 
 interface ComicChaptersProps {
   comicId?: string
@@ -28,6 +30,12 @@ interface CardDescriptionProps {
 export function ComicChapters({ comicId }: ComicChaptersProps) {
   const tagging = ['Terror', 'Drama', 'Hentai', 'Ação', 'Drama', 'Fantasia']
   const { serie } = useIdParam()
+
+  const { id } = useParams()
+
+  const { chapters } = useChapters({ comicId: id })
+
+  console.log(chapters)
 
   const CardDescription: CardDescriptionProps = {
     author: 'Autor',
@@ -47,11 +55,19 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               {tagging[0]} • {tagging[1]} • {serie?.likes} likes
             </span>
 
-            <Button
-              title="Iniciar cap 1"
-              isNavigatable
-              path={`/reader/${serie?.id}/`}
-            />
+            {!chapters.length ? (
+              <Button
+                title="Adicionar capítulo"
+                isNavigatable
+                path={`/admin/${id}/new-chapter`}
+              />
+            ) : (
+              <Button
+                title="Iniciar cap 1"
+                isNavigatable
+                path={`/reader/${serie?.id}/`}
+              />
+            )}
           </WorkTitle>
         </WorkHeader>
 
@@ -59,13 +75,17 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
           <h3>Capítulos</h3>
           <Chapters>
             <Chapter>
-              <Link to={`/reader/${serie?.id}/`}>
-                <sup>Capítulo 1</sup>
-                <h4>1. Sukuna</h4>
-                <span>15/04/99 </span>
-              </Link>
+              {chapters?.map((item) => (
+                <Link to={`/reader/${serie?.id}/${item.chapterNumber}`}>
+                  <sup>Capítulo {item.chapterNumber}</sup>
+                  <h4>
+                    {item.chapterNumber}. {item.chapterTitle}
+                  </h4>
+                  <span>15/04/99</span>
+                </Link>
+              ))}
             </Chapter>
-            <span>Não há capítulos disponíveis. </span>
+            {!chapters.length && <span>Não há capítulos disponíveis. </span>}
           </Chapters>
         </WorkChapters>
       </WorkDetailedInfo>

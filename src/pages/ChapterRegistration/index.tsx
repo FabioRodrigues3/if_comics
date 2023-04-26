@@ -12,17 +12,41 @@ import {
 import React, { useState } from 'react'
 import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
+import { useForm } from 'react-hook-form'
+import {
+  CreateChapterProps,
+  CreateChapters,
+} from '../../services/createChapters'
+import { v4 as uuid } from 'uuid'
 
 export function ChapterRegistration() {
   const [file, setFile] = useState<string>()
   const { serie } = useIdParam()
 
-  console.log(serie?.id)
+  const { reset, handleSubmit, register } = useForm({
+    defaultValues: {
+      chapterTitle: '',
+      chapterNumber: '',
+    },
+  })
 
-  if (file) console.log(URL.createObjectURL(file))
+  async function handleChapterSubmit(data: CreateChapterProps) {
+    await CreateChapters({
+      chapterFile: 'file',
+      chapterTitle: data.chapterTitle,
+      chapterNumber: data.chapterNumber,
+      comicId: serie?.id,
+      id: uuid(),
+    }).then((response) => console.log(response))
+
+    reset()
+  }
 
   return (
-    <Container>
+    <Container onSubmit={handleSubmit(handleChapterSubmit)}>
+      <button type="submit" onClick={handleChapterSubmit}>
+        asdasdasd
+      </button>
       <Title>
         <h2>Publicação de capítulo</h2>
         <Button title="Publicar capítulo" isNavigatable={false} />
@@ -48,7 +72,7 @@ export function ChapterRegistration() {
                     onChange={(e) => setFile(e.target.files[0])}
                     type="file"
                     accept=".pdf"
-                  ></input>
+                  />
                 </label>
                 <span>(Apenas PDF)</span>
               </>
@@ -58,12 +82,18 @@ export function ChapterRegistration() {
           <TitleAndDescription>
             <WorkTitle>
               <span>Título do capítulo</span>
-              <input type="text" />
+              <input type="text" required {...register('chapterTitle')} />
             </WorkTitle>
 
             <WorkTitle>
               <span>Número do capítulo</span>
-              <input type="number" min={0} max={9999} />
+              <input
+                type="text"
+                required
+                min={0}
+                max={9999}
+                {...register('chapterNumber')}
+              />
             </WorkTitle>
           </TitleAndDescription>
         </MainDescription>

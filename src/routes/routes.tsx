@@ -24,7 +24,7 @@ export function AppRoutes() {
           </Route>
           <Route path="/">
             <Route path="/comic/:id" element={<ComicChapters />} />
-            <Route path="/reader/:id" element={<Reader />} />
+            <Route path="/reader/:id/:chapterNumber" element={<Reader />} />
           </Route>
         </Route>
 
