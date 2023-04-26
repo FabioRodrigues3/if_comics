@@ -44,9 +44,6 @@ export function ChapterRegistration() {
 
   return (
     <Container onSubmit={handleSubmit(handleChapterSubmit)}>
-      <button type="submit" onClick={handleChapterSubmit}>
-        asdasdasd
-      </button>
       <Title>
         <h2>Publicação de capítulo</h2>
         <Button title="Publicar capítulo" isNavigatable={false} />
@@ -88,7 +85,7 @@ export function ChapterRegistration() {
             <WorkTitle>
               <span>Número do capítulo</span>
               <input
-                type="text"
+                type="number"
                 required
                 min={0}
                 max={9999}
