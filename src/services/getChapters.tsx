@@ -1,4 +1,4 @@
-import { comicApi } from './comicApi'
+import { comicApi } from './api'
 
 export interface GetChapterByIdProps {
   id?: string

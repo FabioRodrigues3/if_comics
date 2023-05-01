@@ -1,35 +1,58 @@
-import React, { createContext, useState, useEffect } from 'react'
-import { IAuthProvider, IContext, IUser } from './types/types'
-import { LoginRequest, getUserLocalStorage, setUserLocalStorage } from './util'
+import { createContext, useState, useEffect } from "react";
+import { auth } from '../utils/firebase.js'
+import { GoogleAuthProvider, signInWithPopup, getAuth, UserCredential } from 'firebase/auth'
+import { AuthCredential } from 'firebase/auth/'
+import { useNavigate } from "react-router-dom";
+import { LoginRequest, getLocalUser, setLocalUser } from "./authUtil.js";
+import { comicApi } from "../services/api.js";
+interface AuthContextProvider {
+    email?: string;
+    password?: string;
+    token?: string;
+    LoginWithGoogle: () => void;
+    LoginWithAPI: (email: string, password: string) => void
+    user: {}
+    googleUser: {}
+}
 
-export const AuthContext = createContext<IContext>({} as IContext)
+export const AuthContext = createContext({} as AuthContextProvider)
 
-export const AuthProvider = ({ children }: IAuthProvider) => {
-  const [user, setUser] = useState<IUser | null>()
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+    const [user, setUser] = useState({})
+    const [googleUser, setGoogleUser] = useState({})
+    const googleAuthProvider = new GoogleAuthProvider()
 
-  useEffect(() => {
-    const user = getUserLocalStorage()
+    useEffect(() => {
+        const user = getLocalUser()
+        if (user) {
+            setGoogleUser(user)
+            setUser(user)
+        }
+    }, [])
 
-    if (user) setUser(user)
-  }, [])
+    const LoginWithGoogle = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleAuthProvider)
+            setGoogleUser(result.user)
+            setLocalUser(result.user)
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-  async function authenticate(email: string, password: string) {
-    const response = await LoginRequest(email, password)
+    const LoginWithAPI = async (email: string, password: string) => {
+        const response = await LoginRequest(email, password)
+        const payload = { password, email }
 
-    const payload = { token: response.token, email }
+        setUser(payload)
+        setLocalUser(payload.token)
 
-    setUser(payload)
-    setUserLocalStorage(payload)
-  }
+        console.log(payload)
+    }
 
-  async function logout() {
-    setUser(null)
-    setUserLocalStorage(null)
-  }
-
-  return (
-    <AuthContext.Provider value={{ ...user, authenticate }}>
-      {children}
-    </AuthContext.Provider>
-  )
+    return (
+        <AuthContext.Provider value={{ LoginWithGoogle, user, googleUser, LoginWithAPI }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }

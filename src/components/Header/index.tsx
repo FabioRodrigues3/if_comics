@@ -12,8 +12,12 @@ import {
 import { BookOpen, Files, Gear, Question, User } from 'phosphor-react'
 import { Separator } from '@radix-ui/react-separator'
 import { SearchBar } from '../SearchBar'
+import { useAuth } from '../../hooks/useAuth'
 
 export function Header() {
+
+  const { googleUser } = useAuth()
+  console.log(googleUser)
   return (
     <>
       <Container>

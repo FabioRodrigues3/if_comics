@@ -1,29 +1,24 @@
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../hooks/useAuth'
-import { Container, LoginBox, Logo } from './styles'
+import { Buttons, Container, LoginBox, Logo } from './styles'
 import { useForm } from 'react-hook-form'
+import { GoogleLogo } from 'phosphor-react'
+import { useAuth } from '../../hooks/useAuth'
 
 export function Login() {
-  const { authenticate } = useAuth()
-  const history = useNavigate()
-  const { register, handleSubmit, watch } = useForm()
 
-  const email = watch('email')
-  const password = watch('password')
+  const { LoginWithGoogle, LoginWithAPI } = useAuth()
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  })
 
-  async function AuthenticateLogin(values: {
-    email: string
-    password: string
-    e?: EventTarget
-  }) {
-    e.preventDefault()
-    try {
-      await authenticate(values.email, values.password)
-
-      history('/')
-    } catch (error) {
-      console.log('Não foi possível fazer o login.')
-    }
+  const navi = useNavigate();
+  async function AuthenticateAPI(data) {
+    await LoginWithAPI(data.email, data.password)
+    console.log(data)
+    navi('/')
   }
 
   return (
@@ -32,14 +27,10 @@ export function Login() {
         <h2>[ifComics]</h2>
         <p>Upload your story now</p>
       </Logo>
-      <LoginBox
-        handleSubmit={handleSubmit(() =>
-          AuthenticateLogin({ email, password }),
-        )}
-      >
+      <LoginBox onSubmit={handleSubmit(AuthenticateAPI)}>
         <div>
-          <label htmlFor="email">E-mail</label>
-          <input type="email" {...register('email')} />
+          <label htmlFor="email">Usuário</label>
+          <input type="text" {...register('username')} />
         </div>
 
         <div>
@@ -47,9 +38,13 @@ export function Login() {
           <input type="password" {...register('password')} />
         </div>
 
-        <div>
+        <Buttons>
+          <button type="button" onClick={LoginWithGoogle}>
+            <GoogleLogo size={20} /> Entrar com o Google
+          </button>
+
           <button type="submit">Entrar</button>
-        </div>
+        </Buttons>
       </LoginBox>
     </Container>
   )
