@@ -14,14 +14,17 @@ import {
 } from './styles'
 import { Upload } from 'phosphor-react'
 import genre from './genres.json'
-import { CreateComic } from '../../services/createComic'
+import { CreateComic, CreateComicProps } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
 import { useForm } from 'react-hook-form'
 import { getComicsProps } from '../../services/getComicById'
 import { Button } from '../../components/Button'
+import { auth } from '../../utils/firebase.js'
+import { useAuthState } from 'react-firebase-hooks/auth'
 
 export function ComicRegistration() {
   const [file, setFile] = useState<string>()
+  const [user] = useAuthState(auth)
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -31,15 +34,22 @@ export function ComicRegistration() {
     },
   })
 
-  async function comicRegistration(data: getComicsProps) {
-    await CreateComic({
-      description: data.description,
-      id: uuid(),
-      author: 'Default Author',
-      title: data.title,
-    }).catch((err) => {
-      console.log(err)
-    })
+  console.log(user?.uid)
+
+  async function comicRegistration(data) {
+    try {
+      if (user) {
+        await CreateComic({
+          id: uuid(),
+          description: data.description,
+          author: user.displayName,
+          title: data.title,
+          user_id: user?.email,
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
+    } catch (error) {}
 
     reset()
   }

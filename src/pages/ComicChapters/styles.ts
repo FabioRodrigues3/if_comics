@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -15,6 +16,7 @@ export const Container = styled.div`
 
 export const InfoCardArea = styled.div`
   display: flex;
+  align-self: flex-start;
   gap: 1.9375rem;
   flex-direction: column;
 `
@@ -75,14 +77,15 @@ export const WorkChapters = styled.div`
 `
 export const Chapters = styled.div`
   padding: 1rem 0;
+  gap: 5rem;
 `
 
-export const Chapter = styled.div`
+export const Chapter = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   border-bottom: 1px solid #707070;
-  padding-bottom: 1rem;
+  padding: 2rem 0;
 
   span {
     font-weight: 400;

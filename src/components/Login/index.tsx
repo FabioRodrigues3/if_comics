@@ -3,22 +3,29 @@ import { Buttons, Container, LoginBox, Logo } from './styles'
 import { useForm } from 'react-hook-form'
 import { GoogleLogo } from 'phosphor-react'
 import { useAuth } from '../../hooks/useAuth'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../utils/firebase.js'
 
 export function Login() {
-
-  const { LoginWithGoogle, LoginWithAPI } = useAuth()
-  const { register, handleSubmit } = useForm({
+  const { LoginWithGoogle, googleUser } = useAuth()
+  const { register } = useForm({
     defaultValues: {
       username: '',
       password: '',
     },
   })
 
-  const navi = useNavigate();
-  async function AuthenticateAPI(data) {
-    await LoginWithAPI(data.email, data.password)
-    console.log(data)
-    navi('/')
+  const navigate = useNavigate()
+  const [user, loading] = useAuthState(auth)
+
+  async function AuthWithGoogle() {
+    try {
+      await LoginWithGoogle()
+
+      if (user) {
+        navigate('/')
+      }
+    } catch (err) {}
   }
 
   return (
@@ -27,7 +34,7 @@ export function Login() {
         <h2>[ifComics]</h2>
         <p>Upload your story now</p>
       </Logo>
-      <LoginBox onSubmit={handleSubmit(AuthenticateAPI)}>
+      <LoginBox>
         <div>
           <label htmlFor="email">Usuário</label>
           <input type="text" {...register('username')} />
@@ -39,7 +46,7 @@ export function Login() {
         </div>
 
         <Buttons>
-          <button type="button" onClick={LoginWithGoogle}>
+          <button type="button" onClick={AuthWithGoogle}>
             <GoogleLogo size={20} /> Entrar com o Google
           </button>
 

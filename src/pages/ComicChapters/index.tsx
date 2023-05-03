@@ -16,6 +16,8 @@ import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
 import { getChapterById } from '../../services/getChapters'
 import { useChapters } from '../../hooks/useChapters'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from '../../utils/firebase.js'
 
 interface ComicChaptersProps {
   comicId?: string
@@ -34,8 +36,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
   const { id } = useParams()
 
   const { chapters } = useChapters({ comicId: id })
-
-  console.log(chapters)
+  const [user] = useAuthState(auth)
 
   const CardDescription: CardDescriptionProps = {
     author: 'Autor',
@@ -65,26 +66,35 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               <Button
                 title="Iniciar cap 1"
                 isNavigatable
-                path={`/reader/${serie?.id}/`}
+                path={`/reader/${serie?.id}/${chapters[0].chapterNumber}`}
+              />
+            )}
+            {user?.email === serie?.user_id && (
+              <Button
+                title="Adicionar capítulo"
+                isNavigatable
+                path={`/admin/${id}/new-chapter`}
               />
             )}
           </WorkTitle>
         </WorkHeader>
 
         <WorkChapters>
-          <h3>Capítulos</h3>
+          <h3>
+            Capítulos - <span>{chapters.length}</span>
+          </h3>
           <Chapters>
-            <Chapter>
-              {chapters?.map((item) => (
-                <Link to={`/reader/${serie?.id}/${item.chapterNumber}`}>
-                  <sup>Capítulo {item.chapterNumber}</sup>
-                  <h4>
-                    {item.chapterNumber}. {item.chapterTitle}
-                  </h4>
-                  <span>15/04/99</span>
-                </Link>
-              ))}
-            </Chapter>
+            {chapters?.map((item) => (
+              <Chapter
+                key={item.id}
+                to={`/reader/${serie?.id}/${item.chapterNumber}`}
+              >
+                <sup>Capítulo {item.chapterNumber}</sup>
+                <h4>
+                  {item.chapterNumber}. {item.chapterTitle}
+                </h4>
+              </Chapter>
+            ))}
             {!chapters.length && <span>Não há capítulos disponíveis. </span>}
           </Chapters>
         </WorkChapters>

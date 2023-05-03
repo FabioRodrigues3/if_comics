@@ -1,4 +1,4 @@
-import { Trash, Upload } from 'phosphor-react'
+import { Check, CheckCircle, Trash, Upload } from 'phosphor-react'
 import {
   Container,
   ImageUpload,
@@ -18,10 +18,14 @@ import {
   CreateChapters,
 } from '../../services/createChapters'
 import { v4 as uuid } from 'uuid'
+import { Modal } from '../../components/Modal'
+import { useNavigate } from 'react-router-dom'
 
 export function ChapterRegistration() {
   const [file, setFile] = useState<string>()
+  const [modal, setModal] = useState(false)
   const { serie } = useIdParam()
+  const navigate = useNavigate()
 
   const { reset, handleSubmit, register } = useForm({
     defaultValues: {
@@ -31,13 +35,17 @@ export function ChapterRegistration() {
   })
 
   async function handleChapterSubmit(data: CreateChapterProps) {
-    await CreateChapters({
-      chapterFile: 'file',
-      chapterTitle: data.chapterTitle,
-      chapterNumber: data.chapterNumber,
-      comicId: serie?.id,
-      id: uuid(),
-    }).then((response) => console.log(response))
+    try {
+      await CreateChapters({
+        chapterFile: file,
+        chapterTitle: data.chapterTitle,
+        chapterNumber: data.chapterNumber,
+        comicId: serie?.id,
+        id: uuid(),
+      }).then(() => {
+        setModal(true)
+      })
+    } catch (error) {}
 
     reset()
   }
@@ -50,6 +58,11 @@ export function ChapterRegistration() {
       </Title>
 
       <Wrapper>
+        <Modal
+          title="Capítulo adicionado com sucesso"
+          image={<CheckCircle size={50} />}
+          openModal={modal}
+        />
         <MainDescription>
           <ImageUpload>
             {file ? (
@@ -66,7 +79,7 @@ export function ChapterRegistration() {
                 <label>
                   Upload
                   <input
-                    onChange={(e) => setFile(e.target.files[0])}
+                    onChange={(e) => setFile(e.target?.files[0])}
                     type="file"
                     accept=".pdf"
                   />

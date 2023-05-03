@@ -9,15 +9,23 @@ import {
   StyledLink,
   Title,
 } from './styles'
-import { BookOpen, Files, Gear, Question, User } from 'phosphor-react'
+import { BookOpen, Files, Gear, Question, SignOut, User } from 'phosphor-react'
 import { Separator } from '@radix-ui/react-separator'
 import { SearchBar } from '../SearchBar'
 import { useAuth } from '../../hooks/useAuth'
+import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
+import { auth } from '../../utils/firebase.js'
+import { setLocalUser } from '../../contexts/authUtil'
 
 export function Header() {
+  const [user] = useAuthState(auth)
+  const {} = useAuth()
 
-  const { googleUser } = useAuth()
-  console.log(googleUser)
+  async function useHook() {
+    const [user, loading, error] = useSignOut(auth)
+    setLocalUser(null)
+  }
+
   return (
     <>
       <Container>
@@ -25,15 +33,17 @@ export function Header() {
           <Title to="/">ifComics</Title>
           <div>
             <SearchBar />
-            <StyledLink to="/login">
-              <User size={23} weight="fill" />
-              Login
-            </StyledLink>
+            {!user && (
+              <StyledLink to="/login">
+                <User size={23} weight="fill" />
+                Login
+              </StyledLink>
+            )}
 
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
                 <AvatarPic>
-                  <AvatarImage src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80" />
+                  <AvatarImage src={user?.photoURL} />
                 </AvatarPic>
               </DropdownMenu.Trigger>
 
@@ -41,11 +51,11 @@ export function Header() {
                 <Content sideOffset={8}>
                   <Item>
                     <AvatarPic>
-                      <AvatarImage src="https://images.unsplash.com/photo-1511485977113-f34c92461ad9?ixlib=rb-1.2.1&w=128&h=128&dpr=2&q=80" />
+                      <AvatarImage src={user?.photoURL} />
                     </AvatarPic>
                     <div>
-                      <span>coelho5</span>
-                      <span>@coelho5</span>
+                      <span>{user?.displayName}</span>
+                      <span>{`@${user?.displayName}`}</span>
                     </div>
                   </Item>
                   <Separator />
@@ -71,9 +81,9 @@ export function Header() {
                     <span>Configurações</span>
                   </Item>
 
-                  <Item>
-                    <Question size={28} weight="fill" />
-                    <span>Ajuda</span>
+                  <Item onClick={useHook}>
+                    <SignOut size={28} weight="fill" />
+                    <span>Sair</span>
                   </Item>
                 </Content>
               </DropdownMenu.Portal>

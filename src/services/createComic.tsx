@@ -1,12 +1,13 @@
 import { comicApi } from './api'
 
-interface CreateComicProps {
+export interface CreateComicProps {
   id?: string
   title?: string
   description?: string
   image?: string
   likes?: number
-  author?: string
+  author?: string | null
+  user_id?: string | null
 }
 
 export async function CreateComic({
@@ -16,6 +17,7 @@ export async function CreateComic({
   title,
   author,
   likes,
+  user_id,
 }: CreateComicProps) {
   await comicApi.post<CreateComicProps>('/comics', {
     title,
@@ -24,5 +26,6 @@ export async function CreateComic({
     likes,
     id,
     description,
+    user_id,
   })
 }
