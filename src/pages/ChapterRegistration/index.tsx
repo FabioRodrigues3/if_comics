@@ -37,7 +37,7 @@ export function ChapterRegistration() {
   async function handleChapterSubmit(data: CreateChapterProps) {
     try {
       await CreateChapters({
-        chapterFile: file,
+        chapterFile: 'file',
         chapterTitle: data.chapterTitle,
         chapterNumber: data.chapterNumber,
         comicId: serie?.id,

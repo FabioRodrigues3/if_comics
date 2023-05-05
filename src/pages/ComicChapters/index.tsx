@@ -45,6 +45,10 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
   const DescriptionProps = Object.entries(CardDescription)
 
+  const orderedChapters = chapters?.sort(
+    (a, b) => a.chapterNumber - b.chapterNumber,
+  )
+
   return (
     <Container>
       <WorkDetailedInfo>
@@ -56,7 +60,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               {tagging[0]} • {tagging[1]} • {serie?.likes} likes
             </span>
 
-            {!chapters.length ? (
+            {!chapters.length && user?.email === serie?.user_id ? (
               <Button
                 title="Adicionar capítulo"
                 isNavigatable
@@ -64,16 +68,13 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               />
             ) : (
               <Button
-                title="Iniciar cap 1"
-                isNavigatable
-                path={`/reader/${serie?.id}/${chapters[0].chapterNumber}`}
-              />
-            )}
-            {user?.email === serie?.user_id && (
-              <Button
-                title="Adicionar capítulo"
-                isNavigatable
-                path={`/admin/${id}/new-chapter`}
+                title={
+                  orderedChapters.length
+                    ? `Iniciar capítulo ${orderedChapters[0].chapterNumber}`
+                    : `Sem capítulos`
+                }
+                isNavigatable={orderedChapters.length}
+                path={`/reader/${serie?.id}/${orderedChapters[0]?.chapterNumber}`}
               />
             )}
           </WorkTitle>
@@ -81,10 +82,10 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
         <WorkChapters>
           <h3>
-            Capítulos - <span>{chapters.length}</span>
+            Capítulos - <span>{orderedChapters.length}</span>
           </h3>
           <Chapters>
-            {chapters?.map((item) => (
+            {orderedChapters?.map((item) => (
               <Chapter
                 key={item.id}
                 to={`/reader/${serie?.id}/${item.chapterNumber}`}

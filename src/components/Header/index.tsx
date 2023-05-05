@@ -9,22 +9,26 @@ import {
   StyledLink,
   Title,
 } from './styles'
-import { BookOpen, Files, Gear, Question, SignOut, User } from 'phosphor-react'
+import {
+  BookOpen,
+  Files,
+  Gear,
+  Question,
+  SignOut as Out,
+  User,
+} from 'phosphor-react'
 import { Separator } from '@radix-ui/react-separator'
 import { SearchBar } from '../SearchBar'
 import { useAuth } from '../../hooks/useAuth'
-import { useAuthState, useSignOut } from 'react-firebase-hooks/auth'
-import { auth } from '../../utils/firebase.js'
-import { setLocalUser } from '../../contexts/authUtil'
+import React, { useEffect } from 'react'
 
 export function Header() {
-  const [user] = useAuthState(auth)
-  const {} = useAuth()
+  const { SignOut, googleUser, setGoogleUser } = useAuth()
 
-  async function useHook() {
-    const [user, loading, error] = useSignOut(auth)
-    setLocalUser(null)
-  }
+  // useEffect(() => {
+  //   const data = localStorage.getItem('u')
+  //   setGoogleUser(data)
+  // }, [])
 
   return (
     <>
@@ -33,7 +37,7 @@ export function Header() {
           <Title to="/">ifComics</Title>
           <div>
             <SearchBar />
-            {!user && (
+            {!googleUser?.email && (
               <StyledLink to="/login">
                 <User size={23} weight="fill" />
                 Login
@@ -43,7 +47,7 @@ export function Header() {
             <DropdownMenu.Root>
               <DropdownMenu.Trigger asChild>
                 <AvatarPic>
-                  <AvatarImage src={user?.photoURL} />
+                  <AvatarImage src={googleUser?.photoURL} />
                 </AvatarPic>
               </DropdownMenu.Trigger>
 
@@ -51,11 +55,11 @@ export function Header() {
                 <Content sideOffset={8}>
                   <Item>
                     <AvatarPic>
-                      <AvatarImage src={user?.photoURL} />
+                      <AvatarImage src={googleUser?.photoURL} />
                     </AvatarPic>
                     <div>
-                      <span>{user?.displayName}</span>
-                      <span>{`@${user?.displayName}`}</span>
+                      <span>{googleUser?.displayName}</span>
+                      <span>{`@${googleUser?.displayName}`}</span>
                     </div>
                   </Item>
                   <Separator />
@@ -81,15 +85,16 @@ export function Header() {
                     <span>Configurações</span>
                   </Item>
 
-                  <Item onClick={useHook}>
-                    <SignOut size={28} weight="fill" />
+                  <Item>
+                    <Out size={28} weight="fill" onClick={SignOut} />
                     <span>Sair</span>
                   </Item>
                 </Content>
               </DropdownMenu.Portal>
             </DropdownMenu.Root>
-
-            <Button title="Publicar" isNavigatable path="/admin/new-series" />
+            {googleUser?.email && (
+              <Button title="Publicar" isNavigatable path="/admin/new-series" />
+            )}
           </div>
         </nav>
       </Container>

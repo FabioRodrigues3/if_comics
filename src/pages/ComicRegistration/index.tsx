@@ -12,7 +12,7 @@ import {
   Genres,
   GenreTitle,
 } from './styles'
-import { Upload } from 'phosphor-react'
+import { CheckCircle, Upload } from 'phosphor-react'
 import genre from './genres.json'
 import { CreateComic, CreateComicProps } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
@@ -21,10 +21,12 @@ import { getComicsProps } from '../../services/getComicById'
 import { Button } from '../../components/Button'
 import { auth } from '../../utils/firebase.js'
 import { useAuthState } from 'react-firebase-hooks/auth'
+import { Modal } from '../../components/Modal'
 
 export function ComicRegistration() {
   const [file, setFile] = useState<string>()
   const [user] = useAuthState(auth)
+  const [modal, setModal] = useState(false)
 
   const { register, handleSubmit, reset } = useForm({
     defaultValues: {
@@ -45,9 +47,13 @@ export function ComicRegistration() {
           author: user.displayName,
           title: data.title,
           user_id: user?.email,
-        }).catch((err) => {
-          console.log(err)
         })
+          .then(() => {
+            setModal(true)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     } catch (error) {}
 
@@ -56,6 +62,11 @@ export function ComicRegistration() {
 
   return (
     <Container onSubmit={handleSubmit(comicRegistration)}>
+      <Modal
+        openModal={modal}
+        title="O capítulo foi criado com sucesso!"
+        image={<CheckCircle size={50} color="black" />}
+      />
       <Title>
         <h2>Criação de história</h2>
         <Button title="Criar história" isNavigatable={false}></Button>

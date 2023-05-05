@@ -1,32 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import { Buttons, Container, LoginBox, Logo } from './styles'
-import { useForm } from 'react-hook-form'
 import { GoogleLogo } from 'phosphor-react'
 import { useAuth } from '../../hooks/useAuth'
-import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from '../../utils/firebase.js'
+import { useEffect } from 'react'
 
 export function Login() {
   const { LoginWithGoogle, googleUser } = useAuth()
-  const { register } = useForm({
-    defaultValues: {
-      username: '',
-      password: '',
-    },
-  })
-
-  const navigate = useNavigate()
-  const [user, loading] = useAuthState(auth)
-
-  async function AuthWithGoogle() {
-    try {
-      await LoginWithGoogle()
-
-      if (user) {
-        navigate('/')
-      }
-    } catch (err) {}
-  }
+  const navi = useNavigate()
+  useEffect(() => {
+    localStorage.setItem('u', JSON.stringify(googleUser))
+    if (googleUser.email) {
+      navi('/')
+    }
+  }, [googleUser, navi])
 
   return (
     <Container>
@@ -35,22 +21,10 @@ export function Login() {
         <p>Upload your story now</p>
       </Logo>
       <LoginBox>
-        <div>
-          <label htmlFor="email">Usuário</label>
-          <input type="text" {...register('username')} />
-        </div>
-
-        <div>
-          <label htmlFor="password">Senha</label>
-          <input type="password" {...register('password')} />
-        </div>
-
         <Buttons>
-          <button type="button" onClick={AuthWithGoogle}>
+          <button type="button" onClick={LoginWithGoogle}>
             <GoogleLogo size={20} /> Entrar com o Google
           </button>
-
-          <button type="submit">Entrar</button>
         </Buttons>
       </LoginBox>
     </Container>

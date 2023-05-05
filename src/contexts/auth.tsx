@@ -1,46 +1,40 @@
 import React, { createContext, useState, useEffect } from 'react'
 import { auth } from '../utils/firebase.js'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
-import { getLocalUser, setLocalUser } from './authUtil.js'
+import {
+  Auth,
+  GoogleAuthProvider,
+  User,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
 interface AuthContextProvider {
-  email?: string
-  password?: string
-  token?: string
   LoginWithGoogle: () => void
-  LoginWithAPI: (email: string, password: string) => void
-  user: {}
-  googleUser: {}
+  SignOut: (auth: Auth) => void
+  googleUser: User
+  setGoogleUser: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextProvider)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [appUser, setAppUser] = useState({})
-  const [googleUser, setGoogleUser] = useState({})
-  const googleAuthProvider = new GoogleAuthProvider()
+  const [googleUser, setGoogleUser] = useState<User>({} as User)
 
-  useEffect(() => {}, [])
+  const LoginWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
 
-  const LoginWithGoogle = async () => {
-    try {
-      const result = await signInWithPopup(auth, googleAuthProvider)
-      setGoogleUser(result)
-      setLocalUser(result.user.uid)
-      console.log(result)
-    } catch (error) {
-      console.log(error)
-    }
+    signInWithPopup(auth, provider).then((result) => {
+      setGoogleUser(result.user)
+    })
   }
 
-  const LoginWithAPI = async (email: string, password: string) => {
-    const payload = { password, email }
-
-    setAppUser(payload)
-    setLocalUser(payload.token)
+  function SignOut(auth: Auth) {
+    auth.signOut().then(() => setGoogleUser(null))
   }
 
   return (
-    <AuthContext.Provider value={{ LoginWithGoogle, googleUser, LoginWithAPI }}>
+    <AuthContext.Provider
+      value={{ LoginWithGoogle, googleUser, SignOut, setGoogleUser }}
+    >
       {children}
     </AuthContext.Provider>
   )

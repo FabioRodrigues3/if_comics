@@ -9,7 +9,7 @@ export const ProtectedLayout = ({
 }) => {
   const { googleUser } = useAuth()
 
-  if (!googleUser) {
+  if (!googleUser.uid) {
     return <h1>Você não tem permissão para acessar essa página.</h1>
   }
 
