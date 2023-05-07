@@ -158,3 +158,18 @@ export const Genres = styled.div`
     padding: 0.3rem;
   }
 `
+export const Image = styled.div`
+  display: flex;
+  align-self: center;
+  min-width: 300px;
+  max-width: 500px;
+  max-height: 500px;
+  min-height: 300px;
+  width: 50%;
+
+  img {
+    object-fit: fill;
+    border-radius: 6px;
+    width: 100%;
+  }
+`

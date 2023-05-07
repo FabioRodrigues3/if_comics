@@ -21,14 +21,26 @@ import { Separator } from '@radix-ui/react-separator'
 import { SearchBar } from '../SearchBar'
 import { useAuth } from '../../hooks/useAuth'
 import React, { useEffect } from 'react'
+import { signOut } from 'firebase/auth'
+import { useNavigate } from 'react-router-dom'
+import { auth } from '../../utils/firebase.js'
 
 export function Header() {
   const { SignOut, googleUser, setGoogleUser } = useAuth()
-
+  const navigate = useNavigate()
   // useEffect(() => {
   //   const data = localStorage.getItem('u')
   //   setGoogleUser(data)
   // }, [])
+
+  console.log(sessionStorage.getItem('u'))
+
+  async function Logout() {
+    await signOut(auth).then(() => {
+      navigate('/login')
+      setGoogleUser(null)
+    })
+  }
 
   return (
     <>
@@ -86,7 +98,7 @@ export function Header() {
                   </Item>
 
                   <Item>
-                    <Out size={28} weight="fill" onClick={SignOut} />
+                    <Out size={28} weight="fill" onClick={Logout} />
                     <span>Sair</span>
                   </Item>
                 </Content>

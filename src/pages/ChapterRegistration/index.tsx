@@ -22,7 +22,7 @@ import { Modal } from '../../components/Modal'
 import { useNavigate } from 'react-router-dom'
 
 export function ChapterRegistration() {
-  const [file, setFile] = useState<string>()
+  const [file, setFile] = useState()
   const [modal, setModal] = useState(false)
   const { serie } = useIdParam()
   const navigate = useNavigate()

@@ -1,4 +1,6 @@
 import React, { createContext, useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { auth } from '../utils/firebase.js'
 import {
   Auth,
@@ -24,11 +26,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     signInWithPopup(auth, provider).then((result) => {
       setGoogleUser(result.user)
+      sessionStorage.setItem('u', googleUser?.uid)
     })
   }
 
   function SignOut(auth: Auth) {
     auth.signOut().then(() => setGoogleUser(null))
+    sessionStorage.removeItem('u')
+
+    setGoogleUser(null)
   }
 
   return (
