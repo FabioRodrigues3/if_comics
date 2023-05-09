@@ -1,6 +1,6 @@
-
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5'
 import { useState, useRef } from 'react'
+import { CaretLeft, CaretRight } from 'phosphor-react'
 export function ReaderComponent() {
   const [numPages, setNumPages] = useState()
   const [page, setPage] = useState(1)
@@ -20,17 +20,25 @@ export function ReaderComponent() {
   }
 
   function changePage(offset) {
-    setPage(prev => prev + offset)
+    setPage((prev) => prev + offset)
   }
-
 
   return (
     <div>
       {page} de {numPages}
-      <button onClick={BackPage}> volta </button>
-      <button onClick={NextPage}> vai </button>
-
-      <Document ref={useReffing} file="/manwha.pdf" onLoadSuccess={onDocumentLoadSuccess} >
+      <button onClick={BackPage}>
+        {' '}
+        <CaretLeft />{' '}
+      </button>
+      <button onClick={NextPage}>
+        {' '}
+        <CaretRight />{' '}
+      </button>
+      <Document
+        ref={useReffing}
+        file="/manwha.pdf"
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
         <Page height={1000} pageNumber={page} />
       </Document>
     </div>

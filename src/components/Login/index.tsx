@@ -24,14 +24,6 @@ export function Login() {
     }
   }
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        navi('/')
-      }
-    })
-  }, [googleUser])
-
   return (
     <Container>
       {googleUser?.emailVerified ? (

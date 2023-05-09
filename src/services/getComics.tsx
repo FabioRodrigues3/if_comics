@@ -7,6 +7,7 @@ interface getComicsProps {
   description?: string
   likes: number
   image: string
+  imageUrl: string
 }
 
 interface ResponseProps {

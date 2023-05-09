@@ -128,10 +128,6 @@ export const GenreSelector = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
-  input {
-    display: none;
-  }
-
   label {
     border: 1px solid gray;
     border-radius: 6px;

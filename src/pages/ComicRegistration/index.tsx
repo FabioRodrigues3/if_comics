@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Description,
@@ -22,6 +22,7 @@ import { Button } from '../../components/Button'
 import { auth } from '../../utils/firebase.js'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Modal } from '../../components/Modal'
+import { socket } from '../../utils/socketio'
 
 export function ComicRegistration() {
   const [file, setFile] = useState()
@@ -81,11 +82,10 @@ export function ComicRegistration() {
                 <input
                   type="file"
                   accept="image/*"
-                  {...(register(' '),
+                  {...(register('image'),
                   {
                     onChange(event) {
                       setFile(event.target.files[0])
-                      console.log('oidasddsa')
                     },
                   })}
                   name="image"

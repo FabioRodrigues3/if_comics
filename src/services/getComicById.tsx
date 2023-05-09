@@ -8,6 +8,7 @@ export interface getComicsProps {
   likes?: number
   image?: string
   tags?: string[]
+  imageUrl?: string
 }
 
 export interface ResponseProps {
