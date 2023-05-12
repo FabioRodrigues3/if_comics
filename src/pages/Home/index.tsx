@@ -10,7 +10,7 @@ export function Home() {
   const sortByLikes = series.sort((a, b) => b.likes - a.likes)
 
   return (
-    <Container>
+    <Container className="slide-in-bottom">
       <img src={series[0]?.imgUrl} />
 
       <h2>Histórias publicadas</h2>

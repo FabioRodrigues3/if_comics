@@ -12,6 +12,8 @@ import {
   Genres,
   GenreTitle,
   Image,
+  OverlayImage,
+  OverlayText,
 } from './styles'
 import { CheckCircle, Upload } from 'phosphor-react'
 import genre from './genres.json'
@@ -23,12 +25,13 @@ import { auth } from '../../utils/firebase.js'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Modal } from '../../components/Modal'
 import { socket } from '../../utils/socketio'
+import { useNavigate } from 'react-router-dom'
 
 export function ComicRegistration() {
   const [file, setFile] = useState()
   const [user] = useAuthState(auth)
   const [modal, setModal] = useState(false)
-
+  const navigation = useNavigate()
   const { register, handleSubmit, reset } = useForm({})
   async function comicRegistration(data) {
     try {
@@ -53,14 +56,24 @@ export function ComicRegistration() {
     reset()
   }
 
+  useEffect(() => {
+    if (modal) {
+      setTimeout(() => {
+        setModal(false)
+        navigation('/')
+      }, 3000)
+    }
+  }, [modal, navigation])
+
   return (
     <Container
+      className="slide-in-right"
       encType="multipart/form-data"
       onSubmit={handleSubmit(comicRegistration)}
     >
       <Modal
         openModal={modal}
-        title="O capítulo foi criado com sucesso!"
+        title="Sua história foi criada com sucesso! Acesse o menu do administrador e adicione sua história."
         image={<CheckCircle size={50} color="black" />}
       />
       <Title>
@@ -71,8 +84,13 @@ export function ComicRegistration() {
       <Wrapper>
         <MainDescription>
           {file ? (
-            <Image>
-              <img src={URL.createObjectURL(file)} />
+            <Image onClick={() => setFile(null)}>
+              <OverlayText>Para remover, clique na imagem</OverlayText>
+              <img
+                key={file}
+                className="slide-in-blurred-top"
+                src={URL.createObjectURL(file)}
+              />
             </Image>
           ) : (
             <ImageUpload>
@@ -107,18 +125,6 @@ export function ComicRegistration() {
             </Description>
           </TitleAndDescription>
         </MainDescription>
-
-        <GenreSelector>
-          <GenreTitle>
-            <h3>Gênero</h3>
-            <span>Selecione até 3 gêneros</span>
-          </GenreTitle>
-          <Genres>
-            {genre.genres.map((item) => (
-              <span>{item}</span>
-            ))}
-          </Genres>
-        </GenreSelector>
       </Wrapper>
     </Container>
   )

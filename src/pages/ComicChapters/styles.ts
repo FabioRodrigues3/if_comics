@@ -80,10 +80,11 @@ export const Chapters = styled.div`
   gap: 5rem;
 `
 
-export const Chapter = styled(Link)`
+export const Chapter = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #707070;
   padding: 2rem 0;
 
@@ -102,4 +103,12 @@ export const Chapter = styled(Link)`
     font-size: 0.9375rem;
     color: #707070;
   }
+
+  button {
+    border: none;
+    background: #f32013;
+    align-items: center;
+    display: flex;
+  }
 `
+export const DeletionChapter = styled.button``

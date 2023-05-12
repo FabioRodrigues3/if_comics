@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.form`
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
   h2 {
     font-weight: 500;
@@ -156,12 +157,14 @@ export const Genres = styled.div`
 `
 export const Image = styled.div`
   display: flex;
+  flex-direction: column;
   align-self: center;
   min-width: 300px;
   max-width: 500px;
   max-height: 500px;
   min-height: 300px;
   width: 50%;
+  padding: 30px 0 50px 0;
 
   img {
     object-fit: fill;
@@ -169,3 +172,5 @@ export const Image = styled.div`
     width: 100%;
   }
 `
+
+export const OverlayText = styled.span``

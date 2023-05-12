@@ -3,16 +3,13 @@ import { GoogleLogo } from 'phosphor-react'
 import { useAuth } from '../../hooks/useAuth'
 import { useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import {
-  browserLocalPersistence,
-  onAuthStateChanged,
-  setPersistence,
-} from 'firebase/auth'
+import { browserLocalPersistence, setPersistence } from 'firebase/auth'
 import { auth } from '../../utils/firebase'
 import { LoadingElement } from '../LoadingElement'
+import { Modal } from '../Modal'
 
 export function Login() {
-  const { LoginWithGoogle, googleUser } = useAuth()
+  const { LoginWithGoogle, googleUser, setGoogleUser } = useAuth()
   const navi = useNavigate()
 
   async function LoginWithGoogleAuth() {
@@ -24,8 +21,23 @@ export function Login() {
     }
   }
 
+  useEffect(() => {
+    if (googleUser?.email || googleUser?.emailVerified) {
+      navi('/')
+    }
+  }, [googleUser?.email, googleUser?.emailVerified, navi])
+
+  useEffect(() => {
+    const data = localStorage.getItem('u')
+    if (data !== null) setGoogleUser(JSON.parse(data))
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('u', JSON.stringify(googleUser))
+  }, [googleUser])
+
   return (
-    <Container>
+    <Container className="slide-in-right">
       {googleUser?.emailVerified ? (
         <>
           <LoadingElement />

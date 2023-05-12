@@ -4,6 +4,7 @@ import { AppRoutes } from './routes/routes'
 import { GlobalStyle } from './styles/global'
 import theme from './styles/variables'
 import { AuthProvider } from './contexts/auth'
+import './styles/animations.css'
 function App() {
   return (
     <div>

@@ -23,7 +23,7 @@ export const LoginBox = styled.form`
   background-color: white;
   display: flex;
   border-radius: 5px;
-  height: 300px;
+  height: 150px;
   width: 335px;
   box-shadow: 0px 0px 3px black;
   flex-direction: column;
@@ -36,8 +36,8 @@ export const LoginBox = styled.form`
     flex-direction: column;
 
     input {
-      width: 90%;
-      padding: 10px;
+      width: 100%;
+      padding: 30px;
     }
   }
 `

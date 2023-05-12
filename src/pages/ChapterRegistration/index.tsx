@@ -9,7 +9,7 @@ import {
   WorkTitle,
   Wrapper,
 } from './styles'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
 import { useForm } from 'react-hook-form'
@@ -49,6 +49,15 @@ export function ChapterRegistration() {
 
     reset()
   }
+
+  useEffect(() => {
+    if (modal) {
+      setTimeout(() => {
+        setModal(false)
+        navigate(-1)
+      }, 2500)
+    }
+  }, [modal, navigate])
 
   return (
     <Container onSubmit={handleSubmit(handleChapterSubmit)}>

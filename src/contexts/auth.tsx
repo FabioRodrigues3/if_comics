@@ -26,7 +26,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     signInWithPopup(auth, provider).then((result) => {
       setGoogleUser(result.user)
-      sessionStorage.setItem('u', googleUser?.uid)
     })
   }
 
