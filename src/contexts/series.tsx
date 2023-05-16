@@ -1,6 +1,5 @@
-import { createContext, useState, useEffect } from 'react'
+import React, { createContext, useState, useEffect } from 'react'
 import { GetComics } from '../services/getComics'
-
 interface SeriesProps {
   title: string
   description: string

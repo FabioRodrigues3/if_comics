@@ -30,7 +30,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   function SignOut(auth: Auth) {
-    auth.signOut().then(() => setGoogleUser(null))
+    auth.signOut().then(() => setGoogleUser({}))
     sessionStorage.removeItem('u')
 
     setGoogleUser(null)

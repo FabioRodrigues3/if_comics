@@ -1,22 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import {
   Container,
   Description,
-  GenreSelector,
   ImageUpload,
   MainDescription,
   Title,
   TitleAndDescription,
   WorkTitle,
   Wrapper,
-  Genres,
-  GenreTitle,
   Image,
-  OverlayImage,
   OverlayText,
 } from './styles'
 import { CheckCircle, Upload } from 'phosphor-react'
-import genre from './genres.json'
 import { CreateComic } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
 import { useForm } from 'react-hook-form'
@@ -24,16 +19,18 @@ import { Button } from '../../components/Button'
 import { auth } from '../../utils/firebase.js'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Modal } from '../../components/Modal'
-import { socket } from '../../utils/socketio'
 import { useNavigate } from 'react-router-dom'
 
 export function ComicRegistration() {
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<File>()
   const [user] = useAuthState(auth)
   const [modal, setModal] = useState(false)
   const navigation = useNavigate()
   const { register, handleSubmit, reset } = useForm({})
-  async function comicRegistration(data) {
+  async function comicRegistration(data: {
+    description?: string
+    title?: string
+  }) {
     try {
       await CreateComic({
         image: file,
@@ -88,7 +85,7 @@ export function ComicRegistration() {
             <Image onClick={() => setFile(null)}>
               <OverlayText>Para remover, clique na imagem</OverlayText>
               <img
-                key={file}
+                key={file.name}
                 className="slide-in-blurred-top"
                 src={URL.createObjectURL(file)}
               />

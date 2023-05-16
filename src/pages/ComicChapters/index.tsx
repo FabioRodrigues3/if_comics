@@ -77,7 +77,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
       <WorkDetailedInfo>
         <WorkHeader>
-          <WorkImage src={serie?.imageUrl} />
+          <WorkImage src={serie.imageUrl} />
           <WorkTitle>
             <h3>{serie?.title}</h3>
             <span>

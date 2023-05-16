@@ -22,14 +22,17 @@ import { Modal } from '../../components/Modal'
 import { useNavigate } from 'react-router-dom'
 
 export function ChapterRegistration() {
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<FileList>()
   const [modal, setModal] = useState(false)
   const { serie } = useIdParam()
   const navigate = useNavigate()
 
   const { reset, handleSubmit, register } = useForm({})
 
-  async function handleChapterSubmit(data) {
+  async function handleChapterSubmit(data: {
+    chapterTitle?: string
+    chapterNumber?: string
+  }) {
     try {
       await CreateChapters({
         pdfFile: file,

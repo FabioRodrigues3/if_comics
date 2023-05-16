@@ -9,24 +9,16 @@ import {
   StyledLink,
   Title,
 } from './styles'
-import {
-  BookOpen,
-  Files,
-  Gear,
-  Question,
-  SignOut as Out,
-  User,
-} from 'phosphor-react'
+import { BookOpen, Files, Gear, SignOut as Out, User } from 'phosphor-react'
 import { Separator } from '@radix-ui/react-separator'
 import { SearchBar } from '../SearchBar'
 import { useAuth } from '../../hooks/useAuth'
-import React, { useEffect } from 'react'
 import { signOut } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 import { auth } from '../../utils/firebase.js'
 
 export function Header() {
-  const { SignOut, googleUser, setGoogleUser } = useAuth()
+  const { googleUser, setGoogleUser } = useAuth()
   const navigate = useNavigate()
   // useEffect(() => {
   //   const data = localStorage.getItem('u')
@@ -38,7 +30,7 @@ export function Header() {
   async function Logout() {
     await signOut(auth).then(() => {
       navigate('/login')
-      setGoogleUser(null)
+      setGoogleUser()
     })
   }
 

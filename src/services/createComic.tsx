@@ -8,6 +8,7 @@ export interface CreateComicProps {
   author?: string | null
   user_id?: string | null
   comic_cover?: any
+  image: File | undefined
 }
 
 export async function CreateComic({

@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { comicApi } from '../../services/api'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 export function TestForm() {
-  const [file, setFile] = useState()
+  const [file, setFile] = useState<any>()
 
-  const submit = async (event) => {
+  const submit = async (event: any) => {
     event.preventDefault()
-
     const formData = new FormData()
     formData.append('image', file)
     await axios
@@ -18,7 +15,7 @@ export function TestForm() {
       .catch((err) => console.log(err))
   }
 
-  const fileSelected = (event) => {
+  const fileSelected = (event: any) => {
     const file = event.target.files[0]
     setFile(file)
   }

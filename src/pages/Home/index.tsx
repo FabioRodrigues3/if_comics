@@ -12,8 +12,6 @@ export function Home() {
 
   return (
     <Container className="slide-in-bottom">
-      <img src={series[0]?.imgUrl} />
-
       <h2>Histórias publicadas</h2>
       <CustomSeparator />
       <Works>

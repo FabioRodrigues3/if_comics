@@ -1,8 +1,8 @@
 import { comicApi } from './api'
 
 interface DeleteChapterProps {
-  id: string
-  comicId: string
+  id?: string
+  comicId?: string
 }
 
 export async function DeleteChapter({ comicId, id }: DeleteChapterProps) {

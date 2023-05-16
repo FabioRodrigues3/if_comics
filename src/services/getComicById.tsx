@@ -16,7 +16,7 @@ export interface ResponseProps {
 }
 
 interface getComicByIdProps {
-  id: string
+  id: string | undefined
 }
 
 export async function getComicById({ id }: getComicByIdProps) {
