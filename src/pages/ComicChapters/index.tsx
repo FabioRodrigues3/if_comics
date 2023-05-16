@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import {
   Chapter,
+  ChapterController,
   Chapters,
   Container,
-  DeletionChapter,
   InfoCardArea,
   WorkChapters,
   WorkDetailedInfo,
@@ -19,10 +19,11 @@ import { getChapterById } from '../../services/getChapters'
 import { useChapters } from '../../hooks/useChapters'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../utils/firebase.js'
-import { Pencil, Trash, Warning, WarningCircle } from 'phosphor-react'
+import { Pencil, Trash as TrashIcon, WarningCircle } from 'phosphor-react'
 import { Modal } from '../../components/Modal'
 import { DeleteComic } from '../../services/deleteComic'
 import { DeleteChapter } from '../../services/deleteChapter'
+import { Trash } from '../ChapterRegistration/styles'
 
 interface ComicChaptersProps {
   comicId?: string
@@ -53,14 +54,8 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
   async function ComicDeletion() {
     await DeleteComic({ comicId: id }).then(() => {
       setComicExclusion(false)
-      navigation('/')
-    })
-  }
-
-  async function ChapterDeletion(comicId, id) {
-    await DeleteChapter({ comicId, id }).then(() => {
-      setChapterExclusion(false)
       window.location.reload()
+      navigation('/')
     })
   }
 
@@ -89,7 +84,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               {tagging[0]} • {tagging[1]} • {serie?.likes} likes
             </span>
             <div>
-              {!chapters.length && user?.email === serie?.user_id ? (
+              {user?.email === serie?.user_id ? (
                 <Button
                   title="Adicionar capítulo"
                   isNavigatable
@@ -107,10 +102,15 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
                 />
               )}
               {user?.email === serie.user_id && (
-                <>
-                  <Pencil />
-                  <Trash onClick={() => setComicExclusion(true)} />
-                </>
+                <ChapterController>
+                  <Pencil size={25} />
+                  <Trash>
+                    <TrashIcon
+                      size={25}
+                      onClick={() => setComicExclusion(true)}
+                    />
+                  </Trash>
+                </ChapterController>
               )}
             </div>
           </WorkTitle>
@@ -130,18 +130,29 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
                   </h4>
                 </Link>
 
-                <DeletionChapter>
-                  <Trash onClick={() => setChapterExclusion(true)} size={35} />
+                <div>
+                  <Trash>
+                    <TrashIcon
+                      onClick={() => setChapterExclusion(true)}
+                      size={35}
+                    />
+                  </Trash>
                   <Modal
                     title={`Atenção! `}
                     desiredFunction={() =>
-                      DeleteChapter({ comicId: item.comicId, id: item.id })
+                      DeleteChapter({
+                        comicId: item.comicId,
+                        id: item.id,
+                      }).then(() => {
+                        setChapterExclusion(false)
+                        window.location.reload()
+                      })
                     }
                     goBackFunction={() => setChapterExclusion(false)}
                     openModal={chapterExclusion}
                     image={<WarningCircle size={53} />}
                   />
-                </DeletionChapter>
+                </div>
               </Chapter>
             ))}
             {!chapters.length && <span>Não há capítulos disponíveis. </span>}

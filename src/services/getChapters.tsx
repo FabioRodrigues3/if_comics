@@ -9,11 +9,11 @@ export interface GetChapterByIdProps {
 }
 
 export interface ResponseProps {
-  chapterById: GetChapterByIdProps
+  chapter: GetChapterByIdProps
 }
 
 export async function getChapterById({ comicId }: GetChapterByIdProps) {
   const { data } = await comicApi.get<ResponseProps>(`/chapters/${comicId}`)
-  console.log(data.chapterById)
-  return data.chapterById
+  console.log(data)
+  return data.chapter
 }

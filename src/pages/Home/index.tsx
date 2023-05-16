@@ -3,6 +3,7 @@ import { Carousel } from '../../components/Carousel'
 import { CustomSeparator } from '../../components/Footer/styles'
 import { useSeries } from '../../hooks/useWorks'
 import { WorkCard } from '../../components/WorkCard'
+import { useEffect } from 'react'
 
 export function Home() {
   const { series } = useSeries()

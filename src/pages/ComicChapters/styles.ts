@@ -111,4 +111,17 @@ export const Chapter = styled.div`
     display: flex;
   }
 `
-export const DeletionChapter = styled.button``
+export const ChapterController = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  justify-content: center;
+
+  svg {
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
+  }
+`

@@ -61,6 +61,7 @@ export function ComicRegistration() {
       setTimeout(() => {
         setModal(false)
         navigation('/')
+        window.location.reload()
       }, 3000)
     }
   }, [modal, navigation])

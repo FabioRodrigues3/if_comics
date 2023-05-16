@@ -14,8 +14,9 @@ export function Login() {
 
   async function LoginWithGoogleAuth() {
     try {
-      LoginWithGoogle()
-      setPersistence(auth, browserLocalPersistence)
+      setPersistence(auth, browserLocalPersistence).then(() => {
+        LoginWithGoogle()
+      })
     } catch (error) {
       console.log(error)
     }
@@ -26,11 +27,6 @@ export function Login() {
       navi('/')
     }
   }, [googleUser?.email, googleUser?.emailVerified, navi])
-
-  useEffect(() => {
-    const data = localStorage.getItem('u')
-    if (data !== null) setGoogleUser(JSON.parse(data))
-  }, [])
 
   useEffect(() => {
     localStorage.setItem('u', JSON.stringify(googleUser))

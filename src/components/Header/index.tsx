@@ -33,7 +33,7 @@ export function Header() {
   //   setGoogleUser(data)
   // }, [])
 
-  console.log(sessionStorage.getItem('u'))
+  console.log(googleUser)
 
   async function Logout() {
     await signOut(auth).then(() => {

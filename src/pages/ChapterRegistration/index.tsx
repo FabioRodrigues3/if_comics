@@ -27,17 +27,12 @@ export function ChapterRegistration() {
   const { serie } = useIdParam()
   const navigate = useNavigate()
 
-  const { reset, handleSubmit, register } = useForm({
-    defaultValues: {
-      chapterTitle: '',
-      chapterNumber: '',
-    },
-  })
+  const { reset, handleSubmit, register } = useForm({})
 
-  async function handleChapterSubmit(data: CreateChapterProps) {
+  async function handleChapterSubmit(data) {
     try {
       await CreateChapters({
-        chapterFile: 'file',
+        pdfFile: file,
         chapterTitle: data.chapterTitle,
         chapterNumber: data.chapterNumber,
         comicId: serie?.id,
@@ -45,7 +40,9 @@ export function ChapterRegistration() {
       }).then(() => {
         setModal(true)
       })
-    } catch (error) {}
+    } catch (error) {
+      console.log(error)
+    }
 
     reset()
   }
@@ -60,7 +57,10 @@ export function ChapterRegistration() {
   }, [modal, navigate])
 
   return (
-    <Container onSubmit={handleSubmit(handleChapterSubmit)}>
+    <Container
+      encType="multipart/form-data"
+      onSubmit={handleSubmit(handleChapterSubmit)}
+    >
       <Title>
         <h2>Publicação de capítulo</h2>
         <Button title="Publicar capítulo" isNavigatable={false} />
@@ -88,9 +88,15 @@ export function ChapterRegistration() {
                 <label>
                   Upload
                   <input
-                    onChange={(e) => setFile(e.target?.files[0])}
                     type="file"
                     accept=".pdf"
+                    name="pdfFile"
+                    {...(register('pdfFile'),
+                    {
+                      onChange(e) {
+                        setFile(e.target.files[0])
+                      },
+                    })}
                   />
                 </label>
                 <span>(Apenas PDF)</span>
