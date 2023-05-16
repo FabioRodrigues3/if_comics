@@ -7,9 +7,9 @@ export const ProtectedLayout = ({
 }: {
   children: React.ReactNode
 }) => {
-  const { email } = useAuth()
+  const { googleUser } = useAuth()
 
-  if (email) {
+  if (!googleUser.uid) {
     return <h1>Você não tem permissão para acessar essa página.</h1>
   }
 

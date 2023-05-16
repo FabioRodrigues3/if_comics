@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Container,
   Description,
@@ -11,41 +11,72 @@ import {
   Wrapper,
   Genres,
   GenreTitle,
+  Image,
+  OverlayImage,
+  OverlayText,
 } from './styles'
-import { Upload } from 'phosphor-react'
+import { CheckCircle, Upload } from 'phosphor-react'
 import genre from './genres.json'
 import { CreateComic } from '../../services/createComic'
 import { v4 as uuid } from 'uuid'
 import { useForm } from 'react-hook-form'
-import { getComicsProps } from '../../services/getComicById'
 import { Button } from '../../components/Button'
+import { auth } from '../../utils/firebase.js'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { Modal } from '../../components/Modal'
+import { socket } from '../../utils/socketio'
+import { useNavigate } from 'react-router-dom'
 
 export function ComicRegistration() {
-  const [file, setFile] = useState<string>()
-
-  const { register, handleSubmit, reset } = useForm({
-    defaultValues: {
-      imageFile: file,
-      title: '',
-      description: '',
-    },
-  })
-
-  async function comicRegistration(data: getComicsProps) {
-    await CreateComic({
-      description: data.description,
-      id: uuid(),
-      author: 'Default Author',
-      title: data.title,
-    }).catch((err) => {
-      console.log(err)
-    })
+  const [file, setFile] = useState()
+  const [user] = useAuthState(auth)
+  const [modal, setModal] = useState(false)
+  const navigation = useNavigate()
+  const { register, handleSubmit, reset } = useForm({})
+  async function comicRegistration(data) {
+    try {
+      await CreateComic({
+        image: file,
+        id: uuid(),
+        description: data.description,
+        author: user?.displayName,
+        title: data.title,
+        user_id: user?.email,
+      })
+        .then(() => {
+          setModal(true)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } catch (error) {
+      console.log(error)
+    }
 
     reset()
   }
 
+  useEffect(() => {
+    if (modal) {
+      setTimeout(() => {
+        setModal(false)
+        navigation('/')
+        window.location.reload()
+      }, 3000)
+    }
+  }, [modal, navigation])
+
   return (
-    <Container onSubmit={handleSubmit(comicRegistration)}>
+    <Container
+      className="slide-in-right"
+      encType="multipart/form-data"
+      onSubmit={handleSubmit(comicRegistration)}
+    >
+      <Modal
+        openModal={modal}
+        title="Sua história foi criada com sucesso! Acesse o menu do administrador e adicione sua história."
+        image={<CheckCircle size={50} color="black" />}
+      />
       <Title>
         <h2>Criação de história</h2>
         <Button title="Criar história" isNavigatable={false}></Button>
@@ -53,15 +84,35 @@ export function ComicRegistration() {
 
       <Wrapper>
         <MainDescription>
-          <ImageUpload>
-            <Upload size={53} />
-
-            <label>
-              Upload
-              <input type="file" {...register('imageFile')} />
-            </label>
-            <span>(500 x 500)</span>
-          </ImageUpload>
+          {file ? (
+            <Image onClick={() => setFile(null)}>
+              <OverlayText>Para remover, clique na imagem</OverlayText>
+              <img
+                key={file}
+                className="slide-in-blurred-top"
+                src={URL.createObjectURL(file)}
+              />
+            </Image>
+          ) : (
+            <ImageUpload>
+              <Upload size={53} />
+              <label>
+                Upload
+                <input
+                  type="file"
+                  accept="image/*"
+                  {...(register('image'),
+                  {
+                    onChange(event) {
+                      setFile(event.target.files[0])
+                    },
+                  })}
+                  name="image"
+                />
+              </label>
+              <span>(500 x 500)</span>
+            </ImageUpload>
+          )}
 
           <TitleAndDescription>
             <WorkTitle>
@@ -75,18 +126,6 @@ export function ComicRegistration() {
             </Description>
           </TitleAndDescription>
         </MainDescription>
-
-        <GenreSelector>
-          <GenreTitle>
-            <h3>Gênero</h3>
-            <span>Selecione até 3 gêneros</span>
-          </GenreTitle>
-          <Genres>
-            {genre.genres.map((item) => (
-              <span>{item}</span>
-            ))}
-          </Genres>
-        </GenreSelector>
       </Wrapper>
     </Container>
   )

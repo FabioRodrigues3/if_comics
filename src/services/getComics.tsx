@@ -1,4 +1,4 @@
-import { comicApi } from './comicApi'
+import { comicApi } from './api'
 
 interface getComicsProps {
   id?: string
@@ -7,6 +7,7 @@ interface getComicsProps {
   description?: string
   likes: number
   image: string
+  imageUrl: string
 }
 
 interface ResponseProps {

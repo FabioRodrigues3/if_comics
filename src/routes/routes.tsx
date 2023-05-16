@@ -7,6 +7,7 @@ import { ComicRegistration } from '../pages/ComicRegistration'
 import { ComicChapters } from '../pages/ComicChapters'
 import { Reader } from '../pages/Reader'
 import { ChapterRegistration } from '../pages/ChapterRegistration'
+import { TestForm } from '../pages/TestForm'
 
 export function AppRoutes() {
   return (
@@ -29,6 +30,7 @@ export function AppRoutes() {
         </Route>
 
         <Route path="/login" element={<Login />}></Route>
+        <Route path="/test" element={<TestForm />} />
       </Routes>
     </BrowserRouter>
   )

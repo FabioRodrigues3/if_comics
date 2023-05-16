@@ -1,25 +1,33 @@
-import { comicApi } from './comicApi'
+import { comicApi } from './api'
 
 export interface CreateChapterProps {
   id?: string
   comicId?: string
   chapterTitle?: string
-  chapterFile?: string
+  pdfFile?: any
   chapterNumber?: string
 }
 
 export async function CreateChapters({
   id,
   chapterTitle,
-  chapterFile,
+  pdfFile,
   comicId,
   chapterNumber,
 }: CreateChapterProps) {
-  await comicApi.post<CreateChapterProps>('/chapters', {
-    chapterTitle,
-    chapterFile,
-    comicId,
-    id,
-    chapterNumber,
-  })
+  await comicApi.post<CreateChapterProps>(
+    '/chapters',
+    {
+      chapterTitle,
+      pdfFile,
+      comicId,
+      id,
+      chapterNumber,
+    },
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    },
+  )
 }

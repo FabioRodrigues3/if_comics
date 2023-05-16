@@ -1,56 +1,59 @@
-import { useNavigate } from 'react-router-dom'
+import { Buttons, Container, LoginBox, Logo } from './styles'
+import { GoogleLogo } from 'phosphor-react'
 import { useAuth } from '../../hooks/useAuth'
-import { Container, LoginBox, Logo } from './styles'
-import { useForm } from 'react-hook-form'
+import { useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { browserLocalPersistence, setPersistence } from 'firebase/auth'
+import { auth } from '../../utils/firebase'
+import { LoadingElement } from '../LoadingElement'
+import { Modal } from '../Modal'
 
 export function Login() {
-  const { authenticate } = useAuth()
-  const history = useNavigate()
-  const { register, handleSubmit, watch } = useForm()
+  const { LoginWithGoogle, googleUser, setGoogleUser } = useAuth()
+  const navi = useNavigate()
 
-  const email = watch('email')
-  const password = watch('password')
-
-  async function AuthenticateLogin(values: {
-    email: string
-    password: string
-    e?: EventTarget
-  }) {
-    e.preventDefault()
+  async function LoginWithGoogleAuth() {
     try {
-      await authenticate(values.email, values.password)
-
-      history('/')
+      setPersistence(auth, browserLocalPersistence).then(() => {
+        LoginWithGoogle()
+      })
     } catch (error) {
-      console.log('Não foi possível fazer o login.')
+      console.log(error)
     }
   }
 
+  useEffect(() => {
+    if (googleUser?.email || googleUser?.emailVerified) {
+      navi('/')
+    }
+  }, [googleUser?.email, googleUser?.emailVerified, navi])
+
+  useEffect(() => {
+    localStorage.setItem('u', JSON.stringify(googleUser))
+  }, [googleUser])
+
   return (
-    <Container>
-      <Logo>
-        <h2>[ifComics]</h2>
-        <p>Upload your story now</p>
-      </Logo>
-      <LoginBox
-        handleSubmit={handleSubmit(() =>
-          AuthenticateLogin({ email, password }),
-        )}
-      >
-        <div>
-          <label htmlFor="email">E-mail</label>
-          <input type="email" {...register('email')} />
-        </div>
-
-        <div>
-          <label htmlFor="password">Senha</label>
-          <input type="password" {...register('password')} />
-        </div>
-
-        <div>
-          <button type="submit">Entrar</button>
-        </div>
-      </LoginBox>
+    <Container className="slide-in-right">
+      {googleUser?.emailVerified ? (
+        <>
+          <LoadingElement />
+          <h2>Redirecionando...</h2>
+        </>
+      ) : (
+        <>
+          <Logo>
+            <h2>[ifComics]</h2>
+            <p>Upload your story now</p>
+          </Logo>
+          <LoginBox>
+            <Buttons>
+              <button type="button" onClick={LoginWithGoogleAuth}>
+                <GoogleLogo size={20} /> Entrar com o Google
+              </button>
+            </Buttons>
+          </LoginBox>
+        </>
+      )}
     </Container>
   )
 }

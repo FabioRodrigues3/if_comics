@@ -27,6 +27,10 @@ export const NavigatableButton = styled(Link)`
   text-align: center;
   max-width: 250px;
   padding: 5px 10px;
+  text-align: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
   color: white;
   font-size: 1rem;
   font-weight: 500;

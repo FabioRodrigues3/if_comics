@@ -1,4 +1,4 @@
-import { Trash, Upload } from 'phosphor-react'
+import { Check, CheckCircle, Trash, Upload } from 'phosphor-react'
 import {
   Container,
   ImageUpload,
@@ -9,7 +9,7 @@ import {
   WorkTitle,
   Wrapper,
 } from './styles'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
 import { useForm } from 'react-hook-form'
@@ -18,38 +18,60 @@ import {
   CreateChapters,
 } from '../../services/createChapters'
 import { v4 as uuid } from 'uuid'
+import { Modal } from '../../components/Modal'
+import { useNavigate } from 'react-router-dom'
 
 export function ChapterRegistration() {
-  const [file, setFile] = useState<string>()
+  const [file, setFile] = useState()
+  const [modal, setModal] = useState(false)
   const { serie } = useIdParam()
+  const navigate = useNavigate()
 
-  const { reset, handleSubmit, register } = useForm({
-    defaultValues: {
-      chapterTitle: '',
-      chapterNumber: '',
-    },
-  })
+  const { reset, handleSubmit, register } = useForm({})
 
-  async function handleChapterSubmit(data: CreateChapterProps) {
-    await CreateChapters({
-      chapterFile: 'file',
-      chapterTitle: data.chapterTitle,
-      chapterNumber: data.chapterNumber,
-      comicId: serie?.id,
-      id: uuid(),
-    }).then((response) => console.log(response))
+  async function handleChapterSubmit(data) {
+    try {
+      await CreateChapters({
+        pdfFile: file,
+        chapterTitle: data.chapterTitle,
+        chapterNumber: data.chapterNumber,
+        comicId: serie?.id,
+        id: uuid(),
+      }).then(() => {
+        setModal(true)
+      })
+    } catch (error) {
+      console.log(error)
+    }
 
     reset()
   }
 
+  useEffect(() => {
+    if (modal) {
+      setTimeout(() => {
+        setModal(false)
+        navigate(-1)
+      }, 2500)
+    }
+  }, [modal, navigate])
+
   return (
-    <Container onSubmit={handleSubmit(handleChapterSubmit)}>
+    <Container
+      encType="multipart/form-data"
+      onSubmit={handleSubmit(handleChapterSubmit)}
+    >
       <Title>
         <h2>Publicação de capítulo</h2>
         <Button title="Publicar capítulo" isNavigatable={false} />
       </Title>
 
       <Wrapper>
+        <Modal
+          title="Capítulo adicionado com sucesso"
+          image={<CheckCircle size={50} />}
+          openModal={modal}
+        />
         <MainDescription>
           <ImageUpload>
             {file ? (
@@ -66,9 +88,15 @@ export function ChapterRegistration() {
                 <label>
                   Upload
                   <input
-                    onChange={(e) => setFile(e.target.files[0])}
                     type="file"
                     accept=".pdf"
+                    name="pdfFile"
+                    {...(register('pdfFile'),
+                    {
+                      onChange(e) {
+                        setFile(e.target.files[0])
+                      },
+                    })}
                   />
                 </label>
                 <span>(Apenas PDF)</span>

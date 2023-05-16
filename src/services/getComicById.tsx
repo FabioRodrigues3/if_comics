@@ -1,4 +1,4 @@
-import { comicApi } from './comicApi'
+import { comicApi } from './api'
 
 export interface getComicsProps {
   id?: string
@@ -8,6 +8,7 @@ export interface getComicsProps {
   likes?: number
   image?: string
   tags?: string[]
+  imageUrl?: string
 }
 
 export interface ResponseProps {
@@ -20,6 +21,5 @@ interface getComicByIdProps {
 
 export async function getComicById({ id }: getComicByIdProps) {
   const { data } = await comicApi.get<ResponseProps>(`/comics/${id}`)
-  console.log(data)
   return data.comicById
 }

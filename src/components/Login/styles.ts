@@ -23,7 +23,7 @@ export const LoginBox = styled.form`
   background-color: white;
   display: flex;
   border-radius: 5px;
-  height: 250px;
+  height: 150px;
   width: 335px;
   box-shadow: 0px 0px 3px black;
   flex-direction: column;
@@ -36,24 +36,40 @@ export const LoginBox = styled.form`
     flex-direction: column;
 
     input {
-      width: 90%;
-      padding: 10px;
+      width: 100%;
+      padding: 30px;
     }
+  }
+`
+export const Buttons = styled.div`
+  gap: 1rem;
 
-    button {
-      padding: 0.5rem;
-      border: none;
-      box-shadow: 0px 0px 2px;
-      border-radius: 6px;
-      background-color: #008080;
-      color: white;
-      font-weight: 600;
-      width: 50%;
-      align-self: center;
+  button {
+    padding: 0.5rem;
+    border: none;
+    box-shadow: 0px 0px 2px;
+    border-radius: 6px;
+    background-color: #008080;
+    color: white;
+    font-weight: 600;
+    width: 100%;
+    align-self: center;
 
-      &:hover {
-        background-color: #007373;
-      }
+    &:hover {
+      background-color: #007373;
+    }
+  }
+
+  button:nth-child(1) {
+    background-color: #008080;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    padding: 0.8rem;
+
+    &:hover {
+      background-color: #007373;
     }
   }
 `

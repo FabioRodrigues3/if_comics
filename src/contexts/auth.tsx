@@ -1,34 +1,45 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { IAuthProvider, IContext, IUser } from './types/types'
-import { LoginRequest, getUserLocalStorage, setUserLocalStorage } from './util'
+import { useNavigate } from 'react-router-dom'
 
-export const AuthContext = createContext<IContext>({} as IContext)
+import { auth } from '../utils/firebase.js'
+import {
+  Auth,
+  GoogleAuthProvider,
+  User,
+  signInWithPopup,
+  signOut,
+} from 'firebase/auth'
+interface AuthContextProvider {
+  LoginWithGoogle: () => void
+  SignOut: (auth: Auth) => void
+  googleUser: User
+  setGoogleUser: () => void
+}
 
-export const AuthProvider = ({ children }: IAuthProvider) => {
-  const [user, setUser] = useState<IUser | null>()
+export const AuthContext = createContext({} as AuthContextProvider)
 
-  useEffect(() => {
-    const user = getUserLocalStorage()
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [googleUser, setGoogleUser] = useState<User>({} as User)
 
-    if (user) setUser(user)
-  }, [])
+  const LoginWithGoogle = () => {
+    const provider = new GoogleAuthProvider()
 
-  async function authenticate(email: string, password: string) {
-    const response = await LoginRequest(email, password)
-
-    const payload = { token: response.token, email }
-
-    setUser(payload)
-    setUserLocalStorage(payload)
+    signInWithPopup(auth, provider).then((result) => {
+      setGoogleUser(result.user)
+    })
   }
 
-  async function logout() {
-    setUser(null)
-    setUserLocalStorage(null)
+  function SignOut(auth: Auth) {
+    auth.signOut().then(() => setGoogleUser(null))
+    sessionStorage.removeItem('u')
+
+    setGoogleUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ ...user, authenticate }}>
+    <AuthContext.Provider
+      value={{ LoginWithGoogle, googleUser, SignOut, setGoogleUser }}
+    >
       {children}
     </AuthContext.Provider>
   )

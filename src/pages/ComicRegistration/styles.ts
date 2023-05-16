@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.form`
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
   h2 {
     font-weight: 500;
@@ -128,10 +129,6 @@ export const GenreSelector = styled.div`
   flex-wrap: wrap;
   gap: 16px;
 
-  input {
-    display: none;
-  }
-
   label {
     border: 1px solid gray;
     border-radius: 6px;
@@ -158,3 +155,22 @@ export const Genres = styled.div`
     padding: 0.3rem;
   }
 `
+export const Image = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  min-width: 300px;
+  max-width: 500px;
+  max-height: 500px;
+  min-height: 300px;
+  width: 50%;
+  padding: 30px 0 50px 0;
+
+  img {
+    object-fit: fill;
+    border-radius: 6px;
+    width: 100%;
+  }
+`
+
+export const OverlayText = styled.span``

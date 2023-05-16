@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -15,6 +16,7 @@ export const Container = styled.div`
 
 export const InfoCardArea = styled.div`
   display: flex;
+  align-self: flex-start;
   gap: 1.9375rem;
   flex-direction: column;
 `
@@ -75,14 +77,16 @@ export const WorkChapters = styled.div`
 `
 export const Chapters = styled.div`
   padding: 1rem 0;
+  gap: 5rem;
 `
 
 export const Chapter = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid #707070;
-  padding-bottom: 1rem;
+  padding: 2rem 0;
 
   span {
     font-weight: 400;
@@ -98,5 +102,26 @@ export const Chapter = styled.div`
   sub {
     font-size: 0.9375rem;
     color: #707070;
+  }
+
+  button {
+    border: none;
+    background: #f32013;
+    align-items: center;
+    display: flex;
+  }
+`
+export const ChapterController = styled.div`
+  display: flex;
+  gap: 2rem;
+  margin-top: 1rem;
+  justify-content: center;
+
+  svg {
+    cursor: pointer;
+
+    &:hover {
+      color: black;
+    }
   }
 `
