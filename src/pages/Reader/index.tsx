@@ -2,19 +2,25 @@ import { ReaderComponent } from '../../components/Reader'
 import { useIdParam } from '../../hooks/useIdParam'
 import { useParams } from 'react-router-dom'
 import { useChapters } from '../../hooks/useChapters'
-import { Container } from './styles'
+import { ChapterControl, Container } from './styles'
+import { CaretLeft, CaretRight } from 'phosphor-react'
 
 export function Reader() {
-  const { serie } = useIdParam()
-  const { id } = useParams()
-  const { chapter } = useChapters({ id })
+  const { id, comicId } = useParams()
+  const { chapter, chapters } = useChapters({ id, comicId })
 
   return (
     <Container>
-      <h2>
-        <span>Ch. {chapter.chapterNumber}: </span>
-        {chapter.chapterTitle}
-      </h2>
+      <div>
+        <h2>
+          <span>Ch. {chapter.chapterNumber}: </span>
+          {chapter.chapterTitle}
+        </h2>
+        <ChapterControl>
+          <button>Capítulo anterior</button>
+          <button>Próximo capítulo</button>
+        </ChapterControl>
+      </div>
       <ReaderComponent content={chapter.fileUrl} />
     </Container>
   )

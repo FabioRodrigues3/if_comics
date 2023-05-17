@@ -99,15 +99,6 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
                     flexDirection: 'column',
                   }}
                 >
-                  <Button
-                    title={
-                      orderedChapters.length
-                        ? `Iniciar capítulo ${orderedChapters[0].chapterNumber}`
-                        : `Sem capítulos`
-                    }
-                    isNavigatable={orderedChapters.length}
-                    path={`/reader/${serie?.id}/${orderedChapters[0]?.chapterNumber}`}
-                  />
                   {user?.email === serie?.user_id && (
                     <Button
                       title="Adicionar capítulo"
@@ -139,7 +130,9 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
           <Chapters>
             {orderedChapters?.map((item) => (
               <Chapter key={item.id}>
-                <Link to={`/reader/${item.id}/${item.chapterNumber}`}>
+                <Link
+                  to={`/reader/${item.comicId}/${item.id}/${item.chapterNumber}`}
+                >
                   <sup>Capítulo {item.chapterNumber}</sup>
                   <h4>
                     {item.chapterNumber}. {item.chapterTitle}
