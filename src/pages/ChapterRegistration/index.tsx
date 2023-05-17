@@ -13,17 +13,16 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
 import { useForm } from 'react-hook-form'
-import {
-  CreateChapterProps,
-  CreateChapters,
-} from '../../services/createChapters'
+import { CreateChapters } from '../../services/createChapters'
 import { v4 as uuid } from 'uuid'
 import { Modal } from '../../components/Modal'
 import { useNavigate } from 'react-router-dom'
+import { LoadingElement } from '../../components/LoadingElement'
 
 export function ChapterRegistration() {
   const [file, setFile] = useState<FileList>()
   const [modal, setModal] = useState(false)
+  const [loading, setLoading] = useState(false)
   const { serie } = useIdParam()
   const navigate = useNavigate()
 
@@ -33,6 +32,8 @@ export function ChapterRegistration() {
     chapterTitle?: string
     chapterNumber?: string
   }) {
+    setLoading(true)
+
     try {
       await CreateChapters({
         pdfFile: file,
@@ -42,6 +43,7 @@ export function ChapterRegistration() {
         id: uuid(),
       }).then(() => {
         setModal(true)
+        setLoading(false)
       })
     } catch (error) {
       console.log(error)
@@ -64,6 +66,7 @@ export function ChapterRegistration() {
       encType="multipart/form-data"
       onSubmit={handleSubmit(handleChapterSubmit)}
     >
+      {loading && <LoadingElement isFullScreen={true} />}
       <Title>
         <h2>Publicação de capítulo</h2>
         <Button title="Publicar capítulo" isNavigatable={false} />

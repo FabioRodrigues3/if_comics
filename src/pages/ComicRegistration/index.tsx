@@ -20,10 +20,13 @@ import { auth } from '../../utils/firebase.js'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { Modal } from '../../components/Modal'
 import { useNavigate } from 'react-router-dom'
+import { LoadingElement } from '../../components/LoadingElement'
 
 export function ComicRegistration() {
   const [file, setFile] = useState<File>()
   const [user] = useAuthState(auth)
+  const [loading, setLoading] = useState(false)
+
   const [modal, setModal] = useState(false)
   const navigation = useNavigate()
   const { register, handleSubmit, reset } = useForm({})
@@ -31,6 +34,8 @@ export function ComicRegistration() {
     description?: string
     title?: string
   }) {
+    setLoading(true)
+
     try {
       await CreateComic({
         image: file,
@@ -69,6 +74,7 @@ export function ComicRegistration() {
       encType="multipart/form-data"
       onSubmit={handleSubmit(comicRegistration)}
     >
+      {loading && <LoadingElement isFullScreen={true} />}
       <Modal
         openModal={modal}
         title="Sua história foi criada com sucesso! Acesse o menu do administrador e adicione sua história."

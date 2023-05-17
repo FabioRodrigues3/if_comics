@@ -53,9 +53,10 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
   async function ComicDeletion() {
     await DeleteComic({ comicId: id }).then(() => {
-      setComicExclusion(false)
-      window.location.reload()
-      navigation('/')
+      setTimeout(() => {
+        setComicExclusion(false)
+        navigation('/')
+      }, 2000)
     })
   }
 
@@ -66,7 +67,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
   )
 
   return (
-    <Container>
+    <Container className="slide-in-right">
       <Modal
         image={<WarningCircle size={53} color="red" />}
         title={`Deseja excluir ${serie.title} definitivamente?`}
@@ -84,22 +85,37 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               {tagging[0]} • {tagging[1]} • {serie?.likes} likes
             </span>
             <div>
-              {user?.email === serie?.user_id ? (
+              {!orderedChapters.length && user?.email === serie?.user_id ? (
                 <Button
                   title="Adicionar capítulo"
                   isNavigatable
                   path={`/admin/${id}/new-chapter`}
                 />
               ) : (
-                <Button
-                  title={
-                    orderedChapters.length
-                      ? `Iniciar capítulo ${orderedChapters[0].chapterNumber}`
-                      : `Sem capítulos`
-                  }
-                  isNavigatable={orderedChapters.length}
-                  path={`/reader/${serie?.id}/${orderedChapters[0]?.chapterNumber}`}
-                />
+                <div
+                  style={{
+                    display: 'flex',
+                    gap: '1rem',
+                    flexDirection: 'column',
+                  }}
+                >
+                  <Button
+                    title={
+                      orderedChapters.length
+                        ? `Iniciar capítulo ${orderedChapters[0].chapterNumber}`
+                        : `Sem capítulos`
+                    }
+                    isNavigatable={orderedChapters.length}
+                    path={`/reader/${serie?.id}/${orderedChapters[0]?.chapterNumber}`}
+                  />
+                  {user?.email === serie?.user_id && (
+                    <Button
+                      title="Adicionar capítulo"
+                      isNavigatable
+                      path={`/admin/${id}/new-chapter`}
+                    />
+                  )}
+                </div>
               )}
               {user?.email === serie.user_id && (
                 <ChapterController>
@@ -123,7 +139,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
           <Chapters>
             {orderedChapters?.map((item) => (
               <Chapter key={item.id}>
-                <Link to={`/reader/${serie?.id}/${item.chapterNumber}`}>
+                <Link to={`/reader/${item.id}/${item.chapterNumber}`}>
                   <sup>Capítulo {item.chapterNumber}</sup>
                   <h4>
                     {item.chapterNumber}. {item.chapterTitle}

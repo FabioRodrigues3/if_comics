@@ -1,13 +1,42 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components'
 
-export const Container = styled.div`
+interface FullScreen {
+  isFullscreen: boolean
+}
+
+export const Container = styled.div<FullScreen>`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 
+  h2 {
+    text-align: center;
+    color: white;
+  }
+
+  div {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  ${(props) =>
+    props.isFullscreen &&
+    css`
+      position: absolute;
+      height: 100vh;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 50;
+      background-color: rgba(1, 1, 1, 0.9);
+    `}
+
   img {
     height: 300px;
     width: 300px;
   }
-`;
+`

@@ -59,7 +59,13 @@ export function Header() {
                 <Content sideOffset={8}>
                   <Item>
                     <AvatarPic>
-                      <AvatarImage src={googleUser?.photoURL} />
+                      <AvatarImage
+                        src={
+                          googleUser?.photoURL
+                            ? googleUser?.photoURL
+                            : 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg'
+                        }
+                      />
                     </AvatarPic>
                     <div>
                       <span>{googleUser?.displayName}</span>

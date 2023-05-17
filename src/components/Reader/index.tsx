@@ -1,16 +1,19 @@
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5'
-import { useState, useRef } from 'react'
-import { CaretLeft, CaretRight } from 'phosphor-react'
-import { BufferSource } from 'stream/web'
+import { useState } from 'react'
+import { CaretLeft, CaretRight, MaskSad, SmileySad } from 'phosphor-react'
+import { Container, Controllers, ReloadScreen } from './styles'
+import { LoadingElement } from '../LoadingElement'
 export function ReaderComponent({ content }: { content: Buffer }) {
   const [numPages, setNumPages] = useState(0)
   const [page, setPage] = useState(1)
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(true)
 
   function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
     setNumPages(numPages)
     setPage(1)
+    setLoading(false)
   }
-  const useReffing = useRef(null)
 
   function BackPage() {
     changePage(-1)
@@ -25,23 +28,38 @@ export function ReaderComponent({ content }: { content: Buffer }) {
   }
 
   return (
-    <div>
-      {page} de {numPages}
-      <button onClick={BackPage}>
-        {' '}
-        <CaretLeft />{' '}
-      </button>
-      <button onClick={NextPage}>
-        {' '}
-        <CaretRight />{' '}
-      </button>
-      <Document
-        ref={useReffing}
-        file={content}
-        onLoadSuccess={(pdf) => onDocumentLoadSuccess(pdf)}
-      >
-        <Page height={1000} pageNumber={page} />
+    <Container>
+      {loading && <LoadingElement isFullScreen={true} />}
+
+      <Controllers>
+        <button disabled={page === 1} onClick={BackPage}>
+          <CaretLeft />
+        </button>
+        {page} de {numPages}
+        <button disabled={page === numPages} onClick={NextPage}>
+          <CaretRight />
+        </button>
+      </Controllers>
+      <Document file={content} onLoadSuccess={onDocumentLoadSuccess}>
+        <Page
+          onLoadError={() => setError(true)}
+          renderTextLayer={false}
+          renderAnnotationLayer={false}
+          height={1500}
+          pageNumber={page}
+        />
+
+        {error && (
+          <ReloadScreen>
+            <SmileySad size={55} />
+
+            <h2>
+              Não foi possível realizar o carregamento
+              <br /> Por favor, atualize a página e tente novamente.
+            </h2>
+          </ReloadScreen>
+        )}
       </Document>
-    </div>
+    </Container>
   )
 }
