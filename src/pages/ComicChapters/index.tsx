@@ -130,9 +130,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
           <Chapters>
             {orderedChapters?.map((item) => (
               <Chapter key={item.id}>
-                <Link
-                  to={`/reader/${item.comicId}/${item.id}/${item.chapterNumber}`}
-                >
+                <Link to={`/reader/${item.comicId}/${item.id}`}>
                   <sup>Capítulo {item.chapterNumber}</sup>
                   <h4>
                     {item.chapterNumber}. {item.chapterTitle}
