@@ -1,9 +1,8 @@
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { CaretLeft, CaretRight, MaskSad, SmileySad } from 'phosphor-react'
 import { Container, Controllers, ReloadScreen } from './styles'
 import { LoadingElement } from '../LoadingElement'
-import { ChapterController } from '../../pages/ComicChapters/styles'
 
 type ReaderComponentProps = {
   content: Buffer

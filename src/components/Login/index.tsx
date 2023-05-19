@@ -3,7 +3,11 @@ import { GoogleLogo } from 'phosphor-react'
 import { useAuth } from '../../hooks/useAuth'
 import { useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { browserLocalPersistence, setPersistence } from 'firebase/auth'
+import {
+  browserLocalPersistence,
+  browserSessionPersistence,
+  setPersistence,
+} from 'firebase/auth'
 import { auth } from '../../utils/firebase'
 import { LoadingElement } from '../LoadingElement'
 import { Modal } from '../Modal'
@@ -14,7 +18,7 @@ export function Login() {
 
   async function LoginWithGoogleAuth() {
     try {
-      setPersistence(auth, browserLocalPersistence).then(() => {
+      setPersistence(auth, browserSessionPersistence).then(() => {
         LoginWithGoogle()
       })
     } catch (error) {
@@ -27,10 +31,6 @@ export function Login() {
       navi('/')
     }
   }, [googleUser?.email, googleUser?.emailVerified, navi])
-
-  useEffect(() => {
-    localStorage.setItem('u', JSON.stringify(googleUser))
-  }, [googleUser])
 
   return (
     <Container className="slide-in-right">

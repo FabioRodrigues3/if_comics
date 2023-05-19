@@ -20,12 +20,6 @@ import { auth } from '../../utils/firebase.js'
 export function Header() {
   const { googleUser, setGoogleUser } = useAuth()
   const navigate = useNavigate()
-  // useEffect(() => {
-  //   const data = localStorage.getItem('u')
-  //   setGoogleUser(data)
-  // }, [])
-
-  console.log(googleUser)
 
   async function Logout() {
     await signOut(auth).then(() => {

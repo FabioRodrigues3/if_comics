@@ -31,9 +31,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   function SignOut(auth: Auth) {
     auth.signOut().then(() => setGoogleUser({}))
-    sessionStorage.removeItem('u')
+    const userKey = Object.keys(window.localStorage).filter((it) =>
+      it.startsWith('firebase:authUser'),
+    )[0]
+    localStorage.removeItem('u')
 
     setGoogleUser(null)
+    localStorage.removeItem(userKey)
   }
 
   return (

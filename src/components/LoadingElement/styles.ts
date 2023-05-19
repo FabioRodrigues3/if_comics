@@ -32,7 +32,7 @@ export const Container = styled.div<FullScreen>`
       bottom: 0;
       left: 0;
       z-index: 50;
-      background-color: rgba(1, 1, 1, 0.9);
+      background-color: rgba(1, 1, 1, 1);
     `}
 
   img {

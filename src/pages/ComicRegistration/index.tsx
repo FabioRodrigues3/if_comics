@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import {
   Container,
   Description,
@@ -25,11 +25,35 @@ import { LoadingElement } from '../../components/LoadingElement'
 export function ComicRegistration() {
   const [file, setFile] = useState<File>()
   const [user] = useAuthState(auth)
+  const [comicGenre, setComicGenre] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
-
   const [modal, setModal] = useState(false)
   const navigation = useNavigate()
   const { register, handleSubmit, reset } = useForm({})
+
+  const genres = [
+    'Ação',
+    'Realidade',
+    'Fantasia',
+    'Ecchi',
+    'Super-Herói',
+    'Esportes',
+    'Slice of Life',
+  ]
+
+  const setGenres = useCallback(
+    (genre: string) => {
+      const identifyIfRemoved = comicGenre.some((item) => item === genre)
+      if (identifyIfRemoved) {
+        const genreThatWillBeRemoved = comicGenre.indexOf(genre)
+        comicGenre.splice(genreThatWillBeRemoved, 1)
+      } else {
+        setComicGenre((state) => [genre, ...state])
+      }
+    },
+    [comicGenre],
+  )
+
   async function comicRegistration(data: {
     description?: string
     title?: string
@@ -44,6 +68,7 @@ export function ComicRegistration() {
         author: user?.displayName,
         title: data.title,
         user_id: user?.email,
+        genres: String(comicGenre),
       })
         .then(() => {
           setModal(true)
@@ -120,15 +145,34 @@ export function ComicRegistration() {
           <TitleAndDescription>
             <WorkTitle>
               <span>Título</span>
-              <input required type="text" {...register('title')} />
+              <input required min={5} type="text" {...register('title')} />
             </WorkTitle>
 
             <Description>
               <span>Descrição</span>
-              <textarea required {...register('description')}></textarea>
+              <textarea
+                maxLength={150}
+                required
+                {...register('description')}
+              ></textarea>
             </Description>
           </TitleAndDescription>
         </MainDescription>
+
+        <div>
+          <h2>Gêneros</h2>
+          {genres.map((item) => (
+            <div key={item}>
+              <input
+                required={!genres.length}
+                value={item}
+                onClick={() => setGenres(item)}
+                type="checkbox"
+              />
+              <span>{item}</span>
+            </div>
+          ))}
+        </div>
       </Wrapper>
     </Container>
   )

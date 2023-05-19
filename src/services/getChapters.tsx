@@ -14,6 +14,5 @@ export interface ResponseProps {
 
 export async function getChapterById({ comicId }: GetChapterByIdProps) {
   const { data } = await comicApi.get<ResponseProps>(`/chapters/${comicId}`)
-  console.log(data)
   return data.chapter
 }

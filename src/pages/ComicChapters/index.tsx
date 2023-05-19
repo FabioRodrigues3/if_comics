@@ -24,6 +24,8 @@ import { Modal } from '../../components/Modal'
 import { DeleteComic } from '../../services/deleteComic'
 import { DeleteChapter } from '../../services/deleteChapter'
 import { Trash } from '../ChapterRegistration/styles'
+import { LikeComic } from '../../services/likeComic'
+import { useAuth } from '../../hooks/useAuth'
 
 interface ComicChaptersProps {
   comicId?: string
@@ -39,6 +41,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
   const tagging = ['Terror', 'Drama', 'Hentai', 'Ação', 'Drama', 'Fantasia']
   const [user] = useAuthState(auth)
 
+  const { googleUser } = useAuth()
   const { serie } = useIdParam()
   const { id } = useParams()
   const { chapters } = useChapters({ comicId: id })
@@ -62,10 +65,14 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
   const DescriptionProps = Object.entries(CardDescription)
 
+  // function HandleLikeButton(userId: string) {}
+
+  // function HandleDislikeButton(userId: string) {}
+
   const orderedChapters = chapters?.sort(
     (a, b) => a.chapterNumber - b.chapterNumber,
   )
-
+  const genres = !serie?.genres ? [] : Array.from(serie?.genres.split(','))
   return (
     <Container className="slide-in-right">
       <Modal
@@ -175,7 +182,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
             cardTitle={item[1]}
           />
         ))}
-        <InfoCard type="tag" cardTitle="Tags" tags={tagging} />
+        <InfoCard type="tag" cardTitle="Tags" tags={genres} />
       </InfoCardArea>
     </Container>
   )

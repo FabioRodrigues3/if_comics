@@ -9,6 +9,7 @@ export interface getComicsProps {
   image?: string
   tags?: string[]
   imageUrl?: string
+  genres: string
 }
 
 export interface ResponseProps {

@@ -4,11 +4,23 @@ import { CustomSeparator } from '../../components/Footer/styles'
 import { useSeries } from '../../hooks/useWorks'
 import { WorkCard } from '../../components/WorkCard'
 import { useEffect } from 'react'
+import { useAuth } from '../../hooks/useAuth'
 
 export function Home() {
   const { series } = useSeries()
-
+  const { setGoogleUser, googleUser } = useAuth()
   const sortByLikes = series.sort((a, b) => b.likes - a.likes)
+
+  const userKey = Object.keys(window.sessionStorage).filter((it) =>
+    it.startsWith('firebase:authUser'),
+  )[0]
+
+  console.log(userKey)
+  const data = JSON.parse(sessionStorage.getItem(userKey))
+  console.log(data)
+  useEffect(() => {
+    setGoogleUser(data)
+  }, [])
 
   return (
     <Container className="slide-in-bottom">

@@ -1,4 +1,5 @@
-import { Item, Content } from '@radix-ui/react-dropdown-menu'
+import { Content } from '@radix-ui/react-dialog'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Search = styled.input`
@@ -9,7 +10,7 @@ export const Search = styled.input`
   font-size: 15px;
 `
 
-export const SearchItem = styled(Item)`
+export const SearchItem = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -28,24 +29,49 @@ export const SearchItem = styled(Item)`
   }
 `
 
-export const Famous = styled(Item)``
+export const Famous = styled.div``
 
 export const SearchResults = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
   margin-top: 1rem;
+  background-color: white;
+  box-shadow: 1px 1px 3px;
+  position: absolute;
+  top: 30px;
+  right: 6%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  padding: 2rem;
+  z-index: 500;
+  max-width: 500px;
+  width: 300px;
+
+  img {
+    aspect-ratio: 1/1;
+    height: 50px;
+    width: 50px;
+    object-fit: cover;
+    object-position: 50% 50%;
+  }
+
+  svg {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
 `
 
-export const DropdownContent = styled(Content)`
-  min-width: 300px;
-  z-index: 99999999;
-  background-color: white;
-  border-radius: 6px;
-  padding: 8px;
-  box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35),
-    0px 10px 20px -15px rgba(22, 23, 24, 0.2);
-  animation-duration: 400ms;
-  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
+export const WrapperSearch = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 1rem;
+`
+
+export const WrapperInfo = styled(Link)`
+  flex-direction: column;
+  width: 100%;
+  display: flex;
 `
