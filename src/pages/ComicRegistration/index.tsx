@@ -10,6 +10,7 @@ import {
   Wrapper,
   Image,
   OverlayText,
+  Genres,
 } from './styles'
 import { CheckCircle, Upload } from 'phosphor-react'
 import { CreateComic } from '../../services/createComic'
@@ -128,6 +129,7 @@ export function ComicRegistration() {
                 Upload
                 <input
                   type="file"
+                  required
                   accept="image/*"
                   {...(register('image'),
                   {
@@ -159,12 +161,11 @@ export function ComicRegistration() {
           </TitleAndDescription>
         </MainDescription>
 
-        <div>
+        <Genres>
           <h2>Gêneros</h2>
           {genres.map((item) => (
             <div key={item}>
               <input
-                required={!genres.length}
                 value={item}
                 onClick={() => setGenres(item)}
                 type="checkbox"
@@ -172,7 +173,7 @@ export function ComicRegistration() {
               <span>{item}</span>
             </div>
           ))}
-        </div>
+        </Genres>
       </Wrapper>
     </Container>
   )

@@ -147,12 +147,25 @@ export const GenreTitle = styled.div`
 
 export const Genres = styled.div`
   display: flex;
-  gap: 2rem;
-  min-width: 900px;
-  span {
-    border-radius: 6px;
-    border: 1px solid black;
-    padding: 0.3rem;
+  width: 100%;
+  background-color: white;
+  flex-direction: column;
+  justify-content: flex-end;
+
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  h2 {
+    align-self: flex-end;
+  }
+
+  input {
+    &:accent-color {
+      color: teal;
+    }
   }
 `
 export const Image = styled.div`

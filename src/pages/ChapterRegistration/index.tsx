@@ -40,7 +40,6 @@ export function ChapterRegistration() {
         chapterTitle: data.chapterTitle,
         chapterNumber: data.chapterNumber,
         comicId: serie?.id,
-        id: uuid(),
       }).then(() => {
         setModal(true)
         setLoading(false)

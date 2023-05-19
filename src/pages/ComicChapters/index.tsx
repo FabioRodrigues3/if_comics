@@ -15,7 +15,6 @@ import {
 import { InfoCard } from '../../components/InfoCard'
 import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
-import { getChapterById } from '../../services/getChapters'
 import { useChapters } from '../../hooks/useChapters'
 import { useAuthState } from 'react-firebase-hooks/auth'
 import { auth } from '../../utils/firebase.js'
@@ -24,8 +23,6 @@ import { Modal } from '../../components/Modal'
 import { DeleteComic } from '../../services/deleteComic'
 import { DeleteChapter } from '../../services/deleteChapter'
 import { Trash } from '../ChapterRegistration/styles'
-import { LikeComic } from '../../services/likeComic'
-import { useAuth } from '../../hooks/useAuth'
 
 interface ComicChaptersProps {
   comicId?: string
@@ -41,13 +38,14 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
   const tagging = ['Terror', 'Drama', 'Hentai', 'Ação', 'Drama', 'Fantasia']
   const [user] = useAuthState(auth)
 
-  const { googleUser } = useAuth()
   const { serie } = useIdParam()
   const { id } = useParams()
   const { chapters } = useChapters({ comicId: id })
   const [comicExclusion, setComicExclusion] = useState(false)
   const [chapterExclusion, setChapterExclusion] = useState(false)
   const navigation = useNavigate()
+
+  console.log(chapters)
 
   const CardDescription: CardDescriptionProps = {
     author: 'Autor',
@@ -63,15 +61,20 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
     })
   }
 
+  async function DeleteChapterHandle(id: string) {
+    setChapterExclusion(true)
+    await DeleteChapter({ id }).then(() => {
+      setChapterExclusion(false)
+      location.reload()
+    })
+  }
+
   const DescriptionProps = Object.entries(CardDescription)
 
   // function HandleLikeButton(userId: string) {}
 
   // function HandleDislikeButton(userId: string) {}
 
-  const orderedChapters = chapters?.sort(
-    (a, b) => a.chapterNumber - b.chapterNumber,
-  )
   const genres = !serie?.genres ? [] : Array.from(serie?.genres.split(','))
   return (
     <Container className="slide-in-right">
@@ -92,7 +95,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
               {tagging[0]} • {tagging[1]} • {serie?.likes} likes
             </span>
             <div>
-              {!orderedChapters.length && user?.email === serie?.user_id ? (
+              {!chapters.length && user?.email === serie?.user_id ? (
                 <Button
                   title="Adicionar capítulo"
                   isNavigatable
@@ -132,10 +135,10 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
         <WorkChapters>
           <h3>
-            Capítulos - <span>{orderedChapters.length}</span>
+            Capítulos - <span>{chapters.length}</span>
           </h3>
           <Chapters>
-            {orderedChapters?.map((item) => (
+            {chapters?.flatMap((item) => (
               <Chapter key={item.id}>
                 <Link to={`/reader/${item.comicId}/${item.id}`}>
                   <sup>Capítulo {item.chapterNumber}</sup>
@@ -151,22 +154,14 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
                       size={35}
                     />
                   </Trash>
-                  <Modal
-                    title={`Atenção! `}
-                    desiredFunction={() =>
-                      DeleteChapter({
-                        comicId: item.comicId,
-                        id: item.id,
-                      }).then(() => {
-                        setChapterExclusion(false)
-                        window.location.reload()
-                      })
-                    }
-                    goBackFunction={() => setChapterExclusion(false)}
-                    openModal={chapterExclusion}
-                    image={<WarningCircle size={53} />}
-                  />
                 </div>
+                <Modal
+                  title={`Atenção! Você irá excluir o capítulo de uma vez por todas. Deseja prosseguir? `}
+                  desiredFunction={() => DeleteChapterHandle(item.id)}
+                  goBackFunction={() => setChapterExclusion(false)}
+                  openModal={chapterExclusion}
+                  image={<WarningCircle size={53} />}
+                />
               </Chapter>
             ))}
             {!chapters.length && <span>Não há capítulos disponíveis. </span>}
@@ -176,11 +171,7 @@ export function ComicChapters({ comicId }: ComicChaptersProps) {
 
       <InfoCardArea>
         {DescriptionProps?.map((item) => (
-          <InfoCard
-            key={serie.id}
-            content={serie && serie[item[0]]}
-            cardTitle={item[1]}
-          />
+          <InfoCard content={serie && serie[item[0]]} cardTitle={item[1]} />
         ))}
         <InfoCard type="tag" cardTitle="Tags" tags={genres} />
       </InfoCardArea>
