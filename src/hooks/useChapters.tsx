@@ -25,7 +25,6 @@ export function useChapters({
     const response = await getChapter({ id }).then((response) =>
       setChapter(response),
     )
-    console.log(response)
     return response
   }
 

@@ -44,7 +44,6 @@ export function ComicChapters() {
   const [chapterExclusion, setChapterExclusion] = useState(false)
   const [actualNumberOfLikes, setActualNumberOfLikes] = useState<number>()
   const navigation = useNavigate()
-  console.log(actualNumberOfLikes)
   const [liked, setLiked] = useState(false)
 
   const likeTitle = () => {
