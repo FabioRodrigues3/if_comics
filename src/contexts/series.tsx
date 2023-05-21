@@ -15,7 +15,7 @@ interface ISeriesContextProps {
 export const SeriesContext = createContext({} as ISeriesContextProps)
 
 export const SeriesProvider = ({ children }: { children: React.ReactNode }) => {
-  const [seriesList, setSeriesList] = useState<SeriesProps[]>([])
+  const [seriesList, setSeriesList] = useState<any[]>([{} as SeriesProps])
 
   async function settingSeriesList() {
     await GetComics().then((response) => setSeriesList(response))

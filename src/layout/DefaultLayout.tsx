@@ -11,7 +11,7 @@ export function DefaultLayout() {
   )[0]
 
   console.log(userKey)
-  const data = JSON.parse(sessionStorage.getItem(userKey))
+  const data = JSON.parse(sessionStorage.getItem(userKey)!)
   console.log(data)
 
   useEffect(() => {

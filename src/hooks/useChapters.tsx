@@ -14,7 +14,7 @@ export function useChapters({
     {} as GetChapterByIdProps,
   )
   async function getChapters() {
-    const response = await getChapterById({ comicId }).then((response) =>
+    const response = await getChapterById({ comicId }).then((response: any) =>
       setChapters(response),
     )
 

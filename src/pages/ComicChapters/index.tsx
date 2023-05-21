@@ -34,12 +34,6 @@ import { LikeComic } from '../../services/likeComic'
 import { unlikeComic } from '../../services/unlikeComic'
 import { formatDate } from '../../hooks/formatDate'
 
-interface CardDescriptionProps {
-  author?: string
-  description?: string
-  tags?: string
-}
-
 export function ComicChapters() {
   const [user] = useAuthState(auth)
   const { serie } = useIdParam()
@@ -56,18 +50,13 @@ export function ComicChapters() {
   const likeTitle = () => {
     if (!liked) {
       setLiked(true)
-      LikeComic({ id, peopleLiked: { userId: user?.email } })
+      LikeComic({ id, peopleLiked: { userId: user?.email! } })
       setActualNumberOfLikes(actualNumberOfLikes && actualNumberOfLikes + 1)
     } else {
       setLiked(false)
       unlikeComic({ id })
       setActualNumberOfLikes(actualNumberOfLikes && actualNumberOfLikes - 1)
     }
-  }
-
-  const CardDescription: CardDescriptionProps = {
-    author: 'Autor',
-    description: 'Descrição',
   }
 
   async function ComicDeletion() {
@@ -88,9 +77,7 @@ export function ComicChapters() {
     })
   }
 
-  const DescriptionProps = Object.entries(CardDescription)
   const isInfoLoaded = !serie?.author || !serie?.description
-
   const genres = !serie?.genres ? [] : Array.from(serie?.genres.split(','))
 
   useEffect(() => {
@@ -140,7 +127,8 @@ export function ComicChapters() {
                         weight={liked ? 'fill' : 'light'}
                       />
                     </button>
-                    {actualNumberOfLikes || 0} likes
+                    {actualNumberOfLikes === null ? 0 : actualNumberOfLikes}{' '}
+                    likes
                   </div>
                 </div>
                 <SeriesGenre>
@@ -232,14 +220,9 @@ export function ComicChapters() {
           </WorkDetailedInfo>
 
           <InfoCardArea>
-            {DescriptionProps?.map((item) => (
-              <InfoCard
-                key={item[0]}
-                content={serie && serie[item[0]]}
-                cardTitle={item[1]}
-              />
-            ))}
-            {genres.length > 1 && (
+            <InfoCard cardTitle="Autor" content={serie?.author} />
+            <InfoCard cardTitle="Descrição" content={serie?.description} />
+            {genres.length >= 1 && (
               <InfoCard
                 type="tag"
                 cardTitle="Tags"

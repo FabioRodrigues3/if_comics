@@ -11,7 +11,7 @@ interface getComicsProps {
 }
 
 interface ResponseProps {
-  comics: getComicsProps
+  comics: getComicsProps[]
 }
 
 export async function GetComics() {

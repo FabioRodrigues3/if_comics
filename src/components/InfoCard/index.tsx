@@ -2,7 +2,7 @@ import { CardTitle, Container, Tag, TagContainer } from './styles'
 
 interface InfoCardProps {
   cardTitle?: string
-  content?: string
+  content?: any
   type?: 'normal' | 'tag'
   tags?: string[]
 }

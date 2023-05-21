@@ -36,7 +36,7 @@ export function Login() {
     <Container className="slide-in-right">
       {googleUser?.emailVerified ? (
         <>
-          <LoadingElement />
+          <LoadingElement isFullScreen={false} />
           <h2>Redirecionando...</h2>
         </>
       ) : (

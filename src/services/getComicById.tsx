@@ -9,8 +9,8 @@ export interface getComicsProps {
   image?: string
   tags?: string[]
   imageUrl?: string
-  createdAt: string
-  genres: string
+  createdAt?: string
+  genres?: string
   user_id?: string
 }
 

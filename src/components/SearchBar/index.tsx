@@ -8,7 +8,7 @@ import { getComicsProps } from '../../services/getComicById'
 export function SearchBar() {
   const [inputText, setInputText] = useState('')
   const [data, setData] = useState<getComicsProps[]>([])
-  const [content, setContent] = useState<getComicsProps>([])
+  const [content, setContent] = useState<getComicsProps[]>([])
   const getSearchData = async () => {
     await GetComics().then((response) => setData(response))
   }
@@ -36,7 +36,7 @@ export function SearchBar() {
             {!content.length && <span>Resultado não encontrado.</span>}
             {content.map((item) => (
               <WrapperSearch key={item.title}>
-                <img src={item.imageUrl} />
+                <img alt="Search Image" src={item.imageUrl} />
                 <WrapperInfo to={`/comic/${item.id}`}>
                   <span>{item.title}</span>
                   <span>{item.author}</span>

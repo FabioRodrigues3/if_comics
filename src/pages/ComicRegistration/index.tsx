@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router-dom'
 import { LoadingElement } from '../../components/LoadingElement'
 
 export function ComicRegistration() {
-  const [file, setFile] = useState<File>()
+  const [file, setFile] = useState<any>()
   const [user] = useAuthState(auth)
   const [comicGenre, setComicGenre] = useState<string[]>([])
   const [loading, setLoading] = useState(false)
@@ -123,6 +123,7 @@ export function ComicRegistration() {
             <Image onClick={() => setFile(null)}>
               <OverlayText>Para remover, clique na imagem</OverlayText>
               <img
+                alt="Upload do arquivo"
                 key={file.name}
                 className="slide-in-blurred-top"
                 src={URL.createObjectURL(file)}
@@ -140,7 +141,7 @@ export function ComicRegistration() {
                   {...(register('image'),
                   {
                     onChange(event) {
-                      setFile(event.target.files[0])
+                      setFile(event.target.files && event.target.files[0])
                     },
                   })}
                   name="image"

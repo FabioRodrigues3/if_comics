@@ -24,7 +24,7 @@ export function Header() {
   async function Logout() {
     await signOut(auth).then(() => {
       navigate('/login')
-      setGoogleUser()
+      setGoogleUser(null)
     })
   }
 
@@ -42,60 +42,69 @@ export function Header() {
               </StyledLink>
             )}
 
-            <DropdownMenu.Root>
-              <DropdownMenu.Trigger asChild>
-                <AvatarPic>
-                  <AvatarImage src={googleUser?.photoURL} />
-                </AvatarPic>
-              </DropdownMenu.Trigger>
+            {googleUser && (
+              <DropdownMenu.Root>
+                <DropdownMenu.Trigger asChild>
+                  <AvatarPic>
+                    <AvatarImage
+                      src={
+                        googleUser?.photoURL
+                          ? googleUser?.photoURL
+                          : 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg'
+                      }
+                    />
+                  </AvatarPic>
+                </DropdownMenu.Trigger>
 
-              <DropdownMenu.Portal>
-                <Content sideOffset={8}>
-                  <Item>
-                    <AvatarPic>
-                      <AvatarImage
-                        src={
-                          googleUser?.photoURL
-                            ? googleUser?.photoURL
-                            : 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg'
-                        }
-                      />
-                    </AvatarPic>
-                    <div>
-                      <span>{googleUser?.displayName}</span>
-                      <span>{`@${googleUser?.displayName}`}</span>
-                    </div>
-                  </Item>
-                  <Separator />
-
-                  <StyledLink to="/">
+                <DropdownMenu.Portal>
+                  <Content sideOffset={8}>
                     <Item>
-                      <BookOpen size={28} weight="fill" />
-                      <span>Biblioteca</span>
+                      <AvatarPic>
+                        <AvatarImage
+                          src={
+                            googleUser?.photoURL
+                              ? googleUser?.photoURL
+                              : 'https://i.pinimg.com/222x/57/70/f0/5770f01a32c3c53e90ecda61483ccb08.jpg'
+                          }
+                        />
+                      </AvatarPic>
+                      <div>
+                        <span>{googleUser?.displayName}</span>
+                        <span>{`@${googleUser?.displayName}`}</span>
+                      </div>
                     </Item>
-                  </StyledLink>
+                    <Separator />
 
-                  <StyledLink to="/admin/my-comics">
+                    <StyledLink to="/">
+                      <Item>
+                        <BookOpen size={28} weight="fill" />
+                        <span>Biblioteca</span>
+                      </Item>
+                    </StyledLink>
+
+                    <StyledLink to="/admin/my-comics">
+                      <Item>
+                        <Files size={28} />
+                        <span>Minhas histórias</span>
+                      </Item>
+                    </StyledLink>
+
+                    <Separator />
+
+                    <Item disabled={true}>
+                      <Gear size={28} />
+                      <span>Configurações</span>
+                    </Item>
+
                     <Item>
-                      <Files size={28} />
-                      <span>Minhas histórias</span>
+                      <Out size={28} weight="fill" onClick={Logout} />
+                      <span>Sair</span>
                     </Item>
-                  </StyledLink>
+                  </Content>
+                </DropdownMenu.Portal>
+              </DropdownMenu.Root>
+            )}
 
-                  <Separator />
-
-                  <Item disabled={true}>
-                    <Gear size={28} />
-                    <span>Configurações</span>
-                  </Item>
-
-                  <Item>
-                    <Out size={28} weight="fill" onClick={Logout} />
-                    <span>Sair</span>
-                  </Item>
-                </Content>
-              </DropdownMenu.Portal>
-            </DropdownMenu.Root>
             {googleUser?.email && (
               <Button title="Publicar" isNavigatable path="/admin/new-series" />
             )}

@@ -1,19 +1,12 @@
-import React, { createContext, useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { createContext, useState } from 'react'
 
 import { auth } from '../utils/firebase.js'
-import {
-  Auth,
-  GoogleAuthProvider,
-  User,
-  signInWithPopup,
-  signOut,
-} from 'firebase/auth'
+import { Auth, GoogleAuthProvider, User, signInWithPopup } from 'firebase/auth'
 interface AuthContextProvider {
   LoginWithGoogle: () => void
   SignOut: (auth: Auth) => void
   googleUser: User
-  setGoogleUser: () => void
+  setGoogleUser: (data: any) => void
 }
 
 export const AuthContext = createContext({} as AuthContextProvider)
@@ -30,13 +23,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }
 
   function SignOut(auth: Auth) {
-    auth.signOut().then(() => setGoogleUser({}))
+    auth.signOut().then(() => setGoogleUser({} as User))
     const userKey = Object.keys(window.localStorage).filter((it) =>
       it.startsWith('firebase:authUser'),
     )[0]
     localStorage.removeItem('u')
 
-    setGoogleUser(null)
+    setGoogleUser({} as User)
     localStorage.removeItem(userKey)
   }
 

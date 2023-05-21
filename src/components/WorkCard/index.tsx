@@ -8,7 +8,6 @@ import {
 } from './styles'
 import { ThumbsUp } from 'phosphor-react'
 import NoImage from '../../assets/sem-imagem.png'
-import { Link } from 'react-router-dom'
 
 export interface WorkCardProps {
   title?: string

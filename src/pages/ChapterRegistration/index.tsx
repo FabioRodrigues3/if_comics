@@ -19,7 +19,7 @@ import { useNavigate } from 'react-router-dom'
 import { LoadingElement } from '../../components/LoadingElement'
 
 export function ChapterRegistration() {
-  const [file, setFile] = useState<FileList>()
+  const [file, setFile] = useState<any>()
   const [modal, setModal] = useState(false)
   const [loading, setLoading] = useState(false)
   const { serie } = useIdParam()
@@ -98,7 +98,7 @@ export function ChapterRegistration() {
                     {...(register('pdfFile'),
                     {
                       onChange(e) {
-                        setFile(e.target.files[0])
+                        setFile(e.target.files && e.target.files[0])
                       },
                     })}
                   />
