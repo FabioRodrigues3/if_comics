@@ -121,7 +121,11 @@ export const RemoveFile = styled.div`
 `
 export const Trash = styled.div`
   display: flex;
-  gap: 1rem;
-  justify-content: center;
-  align-items: center;
+  cursor: pointer;
+
+  svg {
+    &:hover {
+      color: gray;
+    }
+  }
 `

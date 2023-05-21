@@ -23,6 +23,18 @@ export const FooterContent = styled.div`
   flex-direction: column;
   justify-content: center;
 
+  a {
+    color: white;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+      color: black;
+      background-color: white;
+      border-radius: 8888888888888888px;
+    }
+  }
+
   div {
     display: flex;
     align-items: center;

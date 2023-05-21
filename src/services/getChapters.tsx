@@ -6,6 +6,8 @@ export interface GetChapterByIdProps {
   chapterTitle?: string
   chapterFile?: string
   chapterNumber?: string
+  fileUrl?: string
+  createdAt?: string
 }
 
 export interface ResponseProps {

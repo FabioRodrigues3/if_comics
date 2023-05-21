@@ -6,18 +6,14 @@ export function Footer() {
     <>
       <Container>
         <FooterContent>
-          <span>ifComics</span>
-          <div>
-            <a
-              href="https://github.com/FabioRodrigues3"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <InstagramLogo size={40} />
-            </a>
+          <span>[ifComics]</span>
+          <a
+            href="https://github.com/FabioRodrigues3"
+            target="_blank"
+            rel="noreferrer"
+          >
             <GithubLogo size={40} />
-            <TwitterLogo size={40} weight="fill" />
-          </div>
+          </a>
 
           <FooterText>
             <span>Ajuda</span>

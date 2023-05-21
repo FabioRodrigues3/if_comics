@@ -147,10 +147,12 @@ export const GenreTitle = styled.div`
 
 export const Genres = styled.div`
   display: flex;
+  gap: 1rem;
   width: 100%;
   background-color: white;
   flex-direction: column;
   justify-content: flex-end;
+  margin-top: 1rem;
 
   div {
     display: flex;
@@ -164,7 +166,7 @@ export const Genres = styled.div`
 
   input {
     &:accent-color {
-      color: teal;
+      background-color: teal;
     }
   }
 `
@@ -187,3 +189,23 @@ export const Image = styled.div`
 `
 
 export const OverlayText = styled.span``
+
+export const GenreCheckboxes = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-wrap: wrap;
+  max-width: 500px;
+  gap: 1rem;
+
+  input {
+    height: 20px;
+    width: 20px;
+  }
+
+  label {
+    display: flex;
+    gap: 0.2rem;
+    appearance: none;
+  }
+`

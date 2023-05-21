@@ -3,7 +3,7 @@ import { getComicById, getComicsProps } from '../services/getComicById'
 import { useState, useEffect } from 'react'
 
 export function useIdParam() {
-  const [serie, setSerie] = useState<getComicsProps>({})
+  const [serie, setSerie] = useState<getComicsProps>({} as getComicsProps)
   const { id } = useParams()
 
   async function getComic() {

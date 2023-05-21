@@ -98,6 +98,11 @@ export const Item = styled(Dropdown.Item)`
   gap: 1rem;
   cursor: pointer;
 
+  &:disabled {
+    color: gray;
+    background: gray;
+  }
+
   div {
     display: flex;
     flex-direction: column;

@@ -16,6 +16,10 @@ export const Container = styled.div<FullScreen>`
   }
 
   div {
+    img {
+      height: 200px;
+      width: 200px;
+    }
     height: 100vh;
     display: flex;
     align-items: center;
@@ -28,6 +32,7 @@ export const Container = styled.div<FullScreen>`
     css`
       position: absolute;
       height: 100vh;
+
       top: 0;
       bottom: 0;
       left: 0;

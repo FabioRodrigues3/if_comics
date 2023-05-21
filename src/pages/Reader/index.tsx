@@ -1,44 +1,36 @@
 import { ReaderComponent } from '../../components/Reader'
-import { useCallback, useEffect, useRef } from 'react'
+import { useCallback } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useChapters } from '../../hooks/useChapters'
 import { ChapterControl, Container } from './styles'
 import { GetChapterByIdProps } from '../../services/getChapters'
-import { useForm } from 'react-hook-form'
+
 export function Reader() {
   const { id, comicId } = useParams()
   const { chapter, chapters } = useChapters({ id, comicId })
-  const { register, watch } = useForm()
-  const selectRef = useRef(null)
   const navigate = useNavigate()
 
-  const chapterPagination = chapters.sort(
-    (a, b) => a.chapterNumber - b.chapterNumber,
-  )
-
-  const actualChapter = chapterPagination.find(
+  const actualChapter = chapters.find(
     (item) => item.chapterNumber === chapter.chapterNumber,
   )
 
-  const chapterPosition = chapterPagination.findIndex(
+  const chapterPosition = chapters.findIndex(
     (x) => x.chapterNumber === actualChapter?.chapterNumber,
   )
 
-  const chaptersWithoutCurrent = chapterPagination.filter(
+  const chaptersWithoutCurrent = chapters.filter(
     (item) => item.chapterNumber !== actualChapter?.chapterNumber,
   )
 
   const NextChapter = useCallback(() => {
-    navigate(
-      `/reader/${comicId}/${chapterPagination[chapterPosition + 1]?.id}/`,
-    )
+    navigate(`/reader/${comicId}/${chapters[chapterPosition + 1]?.id}/`)
     window.location.reload()
-  }, [chapterPagination, chapterPosition, comicId, navigate])
+  }, [chapters, chapterPosition, comicId, navigate])
 
   const PreviousChapter = useCallback(() => {
-    navigate(`/reader/${comicId}/${chapterPagination[chapterPosition - 1]?.id}`)
+    navigate(`/reader/${comicId}/${chapters[chapterPosition - 1]?.id}`)
     window.location.reload()
-  }, [chapterPagination, chapterPosition, comicId, navigate])
+  }, [chapters, chapterPosition, comicId, navigate])
 
   const onSelect = (chapter: GetChapterByIdProps) => {
     navigate(`/reader/${comicId}/${chapter.id}/`)

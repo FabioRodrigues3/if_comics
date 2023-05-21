@@ -75,7 +75,7 @@ export function Header() {
                     </Item>
                   </StyledLink>
 
-                  <StyledLink to="/">
+                  <StyledLink to="/admin/my-comics">
                     <Item>
                       <Files size={28} />
                       <span>Minhas histórias</span>
@@ -84,7 +84,7 @@ export function Header() {
 
                   <Separator />
 
-                  <Item>
+                  <Item disabled={true}>
                     <Gear size={28} />
                     <span>Configurações</span>
                   </Item>

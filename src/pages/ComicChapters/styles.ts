@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
 export const Container = styled.div`
@@ -24,14 +23,15 @@ export const InfoCardArea = styled.div`
 export const WorkDetailedInfo = styled.div`
   display: flex;
   flex-direction: column;
+  align-self: flex-start;
   gap: 1rem;
   width: 100%;
 `
 
 export const WorkImage = styled.img`
-  height: 300px;
-  width: 220px;
-  border-radius: 30px;
+  height: 350px;
+  width: 250px;
+  border-radius: 2px;
   background-position: center;
 `
 
@@ -113,9 +113,10 @@ export const Chapter = styled.div`
 `
 export const ChapterController = styled.div`
   display: flex;
+  flex-direction: row;
   gap: 2rem;
   margin-top: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
 
   svg {
     cursor: pointer;
@@ -124,4 +125,9 @@ export const ChapterController = styled.div`
       color: black;
     }
   }
+`
+export const SeriesGenre = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 `

@@ -5,8 +5,8 @@ interface SeriesProps {
   description: string
   author: string
   likes: number
-  createdAt: string
   imageUrl: string
+  user_id?: string
 }
 interface ISeriesContextProps {
   series: SeriesProps[]

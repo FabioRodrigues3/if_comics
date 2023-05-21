@@ -29,5 +29,12 @@ export const FindWorks = styled.div`
   padding: 2rem 0;
   align-items: center;
   justify-content: center;
+  align-items: center;
   flex-direction: column;
+`
+export const DiscoverWorks = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 800px;
+  flex: 1;
 `

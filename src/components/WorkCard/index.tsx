@@ -1,5 +1,6 @@
 import {
   LikeButton,
+  ToComicLink,
   WorkContainer,
   WorkCover,
   WorkInfo,
@@ -27,23 +28,20 @@ export function WorkCard({
   imageUrl,
 }: WorkCardProps) {
   return (
-    <Link to={`/comic/${id}`}>
+    <ToComicLink to={`/comic/${id}`}>
       <WorkContainer>
         <WorkCover image={imageUrl?.length!!! > 0 ? imageUrl : NoImage} />
         <WorkInfo>
-          <WorkTitle>
-            {title}
-            <span>
-              <LikeButton hasLikeIndicator={hasLikeIndicator}>
-                <ThumbsUp size={15} />
-                {likes}
-              </LikeButton>
-            </span>
-          </WorkTitle>
-
+          <WorkTitle>{title}</WorkTitle>
           <span>{author}</span>
         </WorkInfo>
+        {hasLikeIndicator && (
+          <LikeButton hasLikeIndicator>
+            <ThumbsUp size={15} />
+            {likes || 0}
+          </LikeButton>
+        )}
       </WorkContainer>
-    </Link>
+    </ToComicLink>
   )
 }

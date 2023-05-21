@@ -20,7 +20,7 @@ export function InfoCard({
       {type === 'tag' && (
         <TagContainer>
           {tags?.map((item) => (
-            <Tag>{item}</Tag>
+            <Tag key={item[0]}>{item}</Tag>
           ))}
         </TagContainer>
       )}

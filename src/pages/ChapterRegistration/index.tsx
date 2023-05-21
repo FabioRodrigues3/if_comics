@@ -1,4 +1,4 @@
-import { Check, CheckCircle, Trash, Upload } from 'phosphor-react'
+import { CheckCircle, Trash, Upload } from 'phosphor-react'
 import {
   Container,
   ImageUpload,
@@ -14,7 +14,6 @@ import { Button } from '../../components/Button'
 import { useIdParam } from '../../hooks/useIdParam'
 import { useForm } from 'react-hook-form'
 import { CreateChapters } from '../../services/createChapters'
-import { v4 as uuid } from 'uuid'
 import { Modal } from '../../components/Modal'
 import { useNavigate } from 'react-router-dom'
 import { LoadingElement } from '../../components/LoadingElement'

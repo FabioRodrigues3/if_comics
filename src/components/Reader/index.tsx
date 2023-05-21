@@ -1,11 +1,11 @@
 import { Document, Page } from 'react-pdf/dist/esm/entry.webpack5'
 import { useState, useCallback } from 'react'
-import { CaretLeft, CaretRight, MaskSad, SmileySad } from 'phosphor-react'
+import { CaretLeft, CaretRight, SmileySad } from 'phosphor-react'
 import { Container, Controllers, ReloadScreen } from './styles'
 import { LoadingElement } from '../LoadingElement'
 
 type ReaderComponentProps = {
-  content: Buffer
+  content?: string
 }
 
 export function ReaderComponent({ content }: ReaderComponentProps) {
@@ -62,7 +62,6 @@ export function ReaderComponent({ content }: ReaderComponentProps) {
         {error && (
           <ReloadScreen>
             <SmileySad size={55} />
-
             <h2>
               Não foi possível realizar o carregamento
               <br /> Por favor, atualize a página e tente novamente.

@@ -11,6 +11,7 @@ import {
   Image,
   OverlayText,
   Genres,
+  GenreCheckboxes,
 } from './styles'
 import { CheckCircle, Upload } from 'phosphor-react'
 import { CreateComic } from '../../services/createComic'
@@ -40,6 +41,11 @@ export function ComicRegistration() {
     'Super-Herói',
     'Esportes',
     'Slice of Life',
+    'Terror',
+    'Anos 90',
+    'Anos 80',
+    'Drama',
+    'Romance',
   ]
 
   const setGenres = useCallback(
@@ -88,7 +94,7 @@ export function ComicRegistration() {
     if (modal) {
       setTimeout(() => {
         setModal(false)
-        navigation('/')
+        navigation('/admin/my-comics')
         window.location.reload()
       }, 3000)
     }
@@ -103,7 +109,7 @@ export function ComicRegistration() {
       {loading && <LoadingElement isFullScreen={true} />}
       <Modal
         openModal={modal}
-        title="Sua história foi criada com sucesso! Acesse o menu do administrador e adicione sua história."
+        title="Sua história foi criada com sucesso."
         image={<CheckCircle size={50} color="black" />}
       />
       <Title>
@@ -153,7 +159,7 @@ export function ComicRegistration() {
             <Description>
               <span>Descrição</span>
               <textarea
-                maxLength={150}
+                maxLength={350}
                 required
                 {...register('description')}
               ></textarea>
@@ -163,16 +169,21 @@ export function ComicRegistration() {
 
         <Genres>
           <h2>Gêneros</h2>
-          {genres.map((item) => (
-            <div key={item}>
-              <input
-                value={item}
-                onClick={() => setGenres(item)}
-                type="checkbox"
-              />
-              <span>{item}</span>
-            </div>
-          ))}
+          <GenreCheckboxes>
+            {genres.map((item) => (
+              <div key={item}>
+                <label>
+                  <input
+                    required={!comicGenre}
+                    value={item}
+                    onClick={() => setGenres(item)}
+                    type="checkbox"
+                  />
+                  {item}
+                </label>
+              </div>
+            ))}
+          </GenreCheckboxes>
         </Genres>
       </Wrapper>
     </Container>

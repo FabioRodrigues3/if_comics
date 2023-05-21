@@ -10,7 +10,9 @@ export function useChapters({
   id?: string
 }) {
   const [chapters, setChapters] = useState<GetChapterByIdProps[]>([])
-  const [chapter, setChapter] = useState({})
+  const [chapter, setChapter] = useState<GetChapterByIdProps>(
+    {} as GetChapterByIdProps,
+  )
   async function getChapters() {
     const response = await getChapterById({ comicId }).then((response) =>
       setChapters(response),

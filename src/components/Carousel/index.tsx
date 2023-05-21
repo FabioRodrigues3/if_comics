@@ -5,9 +5,10 @@ import { LoadingElement } from '../LoadingElement'
 
 interface CarouselProps {
   works: WorkCardProps[]
+  likeCarrousel: boolean
 }
 
-export function Carousel({ works }: CarouselProps) {
+export function Carousel({ works, likeCarrousel = true }: CarouselProps) {
   return (
     <>
       {works.length ? (
@@ -20,15 +21,19 @@ export function Carousel({ works }: CarouselProps) {
           swipeable
           showStatus={false}
           showIndicators={false}
-          showArrows={false}
+          showArrows
           showThumbs={false}
         >
           {works?.map((work) => (
-            <WorkCard {...work} />
+            <WorkCard
+              key={work.title}
+              hasLikeIndicator={likeCarrousel}
+              {...work}
+            />
           ))}
         </DefaultCaroussel>
       ) : (
-        <LoadingElement />
+        <LoadingElement isFullScreen={false} />
       )}
     </>
   )
