@@ -9,11 +9,7 @@ export function DefaultLayout() {
   const userKey = Object.keys(window.sessionStorage).filter((it) =>
     it.startsWith('firebase:authUser'),
   )[0]
-
-  console.log(userKey)
   const data = JSON.parse(sessionStorage.getItem(userKey)!)
-  console.log(data)
-
   useEffect(() => {
     setGoogleUser(data)
   }, [])
