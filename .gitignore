@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 manhwa.pdf
+
+.vercel

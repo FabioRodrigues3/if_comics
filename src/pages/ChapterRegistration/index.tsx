@@ -103,7 +103,7 @@ export function ChapterRegistration() {
                     })}
                   />
                 </label>
-                <span>(Apenas PDF)</span>
+                <span>(Apenas PDF / 4MB)</span>
               </>
             )}
           </ImageUpload>
