@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react'
-import { GetComics } from '../services/getComics'
+import { GetByLike, GetComics } from '../services/getComics'
 interface SeriesProps {
   title: string
   description: string
@@ -10,15 +10,21 @@ interface SeriesProps {
 }
 interface ISeriesContextProps {
   series: SeriesProps[]
+  orderedByLikeSeries: SeriesProps[]
 }
 
 export const SeriesContext = createContext({} as ISeriesContextProps)
 
 export const SeriesProvider = ({ children }: { children: React.ReactNode }) => {
   const [seriesList, setSeriesList] = useState<any[]>([{} as SeriesProps])
+  const [ByLike, setByLike] = useState<any[]>([{} as SeriesProps])
 
   async function settingSeriesList() {
-    await GetComics().then((response) => setSeriesList(response))
+    await GetComics()
+      .then((response) => setSeriesList(response))
+      .then(() => {
+        GetByLike().then((response) => setByLike(response))
+      })
   }
 
   useEffect(() => {
@@ -26,7 +32,9 @@ export const SeriesProvider = ({ children }: { children: React.ReactNode }) => {
   }, [])
 
   return (
-    <SeriesContext.Provider value={{ series: seriesList }}>
+    <SeriesContext.Provider
+      value={{ series: seriesList, orderedByLikeSeries: ByLike }}
+    >
       {children}
     </SeriesContext.Provider>
   )

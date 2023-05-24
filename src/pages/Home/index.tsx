@@ -5,8 +5,9 @@ import { useSeries } from '../../hooks/useWorks'
 import { WorkCard } from '../../components/WorkCard'
 
 export function Home() {
-  const { series } = useSeries()
-  const sortByLikes = series.sort((a, b) => b.likes - a.likes)
+  const { series, orderedByLikeSeries } = useSeries()
+
+  orderedByLikeSeries.sort((a, b) => b.likes - a.likes)
 
   return (
     <Container className="slide-in-bottom">
@@ -20,7 +21,7 @@ export function Home() {
       <CustomSeparator />
 
       <Works>
-        <Carousel likeCarrousel works={sortByLikes} />
+        <Carousel likeCarrousel works={orderedByLikeSeries} />
       </Works>
 
       <FindWorks>
